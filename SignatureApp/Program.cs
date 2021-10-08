@@ -21,6 +21,7 @@ namespace SignatureApp
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
+
             string exepath = Environment.CurrentDirectory;
             string exeDir = System.IO.Path.GetDirectoryName(exepath);
             DirectoryInfo binDir = System.IO.Directory.GetParent(exeDir);

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using SignatureApp.Properties;
@@ -14,7 +15,7 @@ namespace SignatureApp
     {
         public Dictionary<string, List<string>> UserData { get; set; }
 
-        private readonly string databaseFolderPath = @"F:\Programming\C#\Signature Verification Project\SignatureApp\SignatureApp\Database";
+       // private readonly string databaseFolderPath = @"F:\Programming\C#\Signature Verification Project\SignatureApp\SignatureApp\Database";
         //private string databaseFolderPath;
         //private String DatabaseFolderPath
         //{
@@ -25,17 +26,30 @@ namespace SignatureApp
         //        string exeDir = System.IO.Path.GetDirectoryName(exePath);
         //        DirectoryInfo binDir = System.IO.Directory.GetParent(exeDir);
 
-        //        value = Path.Combine(binDir.ToString(), @"Database").ToString();
-        //        databaseFolderPath = value;
+        //        this.databaseFolderPath = Path.Combine(binDir.ToString(), @"Database").ToString();
         //    }
         //}
+
+        private string databaseFolderPath;
+
+        public string DatabaseFolderPath => databaseFolderPath;
+
+        private void getDatabaseFolderPath()
+        {
+            string exePath = Environment.CurrentDirectory; //folder where .exe is located
+            string exeDir = System.IO.Path.GetDirectoryName(exePath); //folder where bin is located
+            DirectoryInfo binDir = System.IO.Directory.GetParent(exeDir); //get the parent of the folder where bin-folder is located
+            this.databaseFolderPath = Path.Combine(binDir.ToString(), @"Database").ToString(); 
+        }
 
 
         public List<string> GetSignatureFileNames()
         {
-            List<string> fileNames = new List<string>();  
+            List<string> fileNames = new List<string>();
+            getDatabaseFolderPath();
 
-            string[] files = Directory.GetFiles(databaseFolderPath); // paths of the files
+
+            string[] files = Directory.GetFiles(DatabaseFolderPath); // paths of the files
             foreach (var file in files)
             {  
                 var signatureFile = Path.GetFileName(file); // returns only the name + extension
