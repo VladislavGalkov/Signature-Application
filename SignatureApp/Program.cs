@@ -20,15 +20,6 @@ namespace SignatureApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
-
-            string exepath = Environment.CurrentDirectory;
-            string exeDir = System.IO.Path.GetDirectoryName(exepath);
-            DirectoryInfo binDir = System.IO.Directory.GetParent(exeDir);
-
-
-            Trace.WriteLine(Path.Combine(binDir.ToString(), @"Database"));
-
         }
     }
 }

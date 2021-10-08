@@ -51,8 +51,7 @@
             this.cBoxUsers.Name = "cBoxUsers";
             this.cBoxUsers.Size = new System.Drawing.Size(149, 24);
             this.cBoxUsers.TabIndex = 1;
-            this.cBoxUsers.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            this.cBoxUsers.MouseClick += new System.Windows.Forms.MouseEventHandler(this.comboBox1_MouseClick);
+            this.cBoxUsers.SelectedIndexChanged += new System.EventHandler(this.cBoxUsers_SelectedIndexChanged);
             // 
             // cBoxSignatures
             // 
@@ -62,7 +61,6 @@
             this.cBoxSignatures.Name = "cBoxSignatures";
             this.cBoxSignatures.Size = new System.Drawing.Size(149, 24);
             this.cBoxSignatures.TabIndex = 2;
-            this.cBoxSignatures.SelectedIndexChanged += new System.EventHandler(this.cBoxSignatures_SelectedIndexChanged);
             // 
             // OKbutton
             // 
@@ -84,6 +82,7 @@
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseMnemonic = false;
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // Form1
             // 
@@ -96,7 +95,7 @@
             this.Controls.Add(this.cBoxUsers);
             this.Controls.Add(this.canvas);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Signature Verification";
             this.ResumeLayout(false);
 
         }
