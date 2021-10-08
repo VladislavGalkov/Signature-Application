@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace SignatureApp
 {
@@ -19,8 +21,12 @@ namespace SignatureApp
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-           // var signature = new Signature();
-          //  signature.Parse();
+            string exepath = Environment.CurrentDirectory;
+            string exeDir = System.IO.Path.GetDirectoryName(exepath);
+            DirectoryInfo binDir = System.IO.Directory.GetParent(exeDir);
+
+
+            Trace.WriteLine(Path.Combine(binDir.ToString(), @"Database"));
 
         }
     }
