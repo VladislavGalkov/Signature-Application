@@ -19,7 +19,7 @@ namespace SignatureApp
 
         public string DatabaseFolderPath => databaseFolderPath;
 
-        private void getDatabaseFolderPath()
+        private void GetDatabaseFolderPath()
         {
             string exePath = Environment.CurrentDirectory; //folder where .exe is located
             string exeDir = System.IO.Path.GetDirectoryName(exePath); //folder where bin is located
@@ -27,70 +27,9 @@ namespace SignatureApp
             this.databaseFolderPath = Path.Combine(binDir.ToString(), @"Database").ToString(); 
         }
 
-        #region NoYieldReturn
-
-
-
-
-        //public List<string> GetSignatureFileNames()
-        //{
-        //    List<string> fileNames = new List<string>();
-        //    getDatabaseFolderPath();
-
-
-        //    string[] files = Directory.GetFiles(DatabaseFolderPath); // paths of the files
-        //    foreach (var file in files)
-        //    {  
-        //        var signatureFile = Path.GetFileName(file); // returns only the name + extension
-        //        fileNames.Add(signatureFile);
-        //        //Trace.WriteLine(signatureFile);
-        //    }
-
-        //    return fileNames;
-        //}
-
-        //public Dictionary<string, List<string>> Parse()
-        //{
-        //    UserData = new Dictionary<string, List<string>>();
-        //   // Dictionary<string, List<string>> userData = new Dictionary<string, List<string>>();
-        //    List<string> signatureList = new List<string>();
-        //    List<string> fileNames = GetSignatureFileNames();
-        //    StringBuilder stringBuilder = new StringBuilder();
-        //    string[] parsedName;
-        //    foreach (var name in fileNames)
-        //    {
-        //        stringBuilder.Clear();
-        //        parsedName = name.Split('_'); //A01 F1 1.trj
-        //        parsedName[2] = parsedName[2].Substring(0, 2); //get rid of extension
-        //        for (int i = 1; i <= 2; i++)
-        //        {
-        //            stringBuilder.Append(parsedName[i]);
-        //            if (i != 2)
-        //                stringBuilder.Append('_'); // no underscore at the end 
-        //        }
-
-        //        if (!UserData.ContainsKey(parsedName[0])) // if it's a new user, create new signature list for it
-        //        {
-        //            signatureList = new List<string>(); // make it empty
-        //            signatureList.Add(stringBuilder.ToString());
-        //            UserData[parsedName[0]] = signatureList;
-        //        }
-
-        //        else
-        //        {
-        //            signatureList.Add(stringBuilder.ToString());
-        //            UserData[parsedName[0]] = signatureList;
-        //        }
-        //    }
-
-        //    return UserData;
-        //}
-
-        #endregion
-
-        public IEnumerable<string> GetSignatureFileNames()
+        private IEnumerable<string> GetSignatureFileNames()
         {
-            getDatabaseFolderPath();
+            GetDatabaseFolderPath();
 
             string[] files = Directory.GetFiles(DatabaseFolderPath); // paths of the files
             foreach (var file in files)
