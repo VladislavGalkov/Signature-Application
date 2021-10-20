@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,23 +70,37 @@ namespace SignatureApp
                     if (!Int32.Parse(parsed[0]).Equals(-1)) // when a line starts with '-1', it means the end of a stroke
                     {
                         Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
+                       // CheckPosition();
                         points.Add(p);
                     }
                 }
 
-                for (int i = 1; i < points.Count; i++)
-                {
-                    Point prevPoint = new Point(points[i - 1].X, points[i - 1].Y);
-                    Point currPoint = new Point(points[i].X, points[i].Y);
+               
+                var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
+                
+                e.Graphics.Transform = flipYMatrix;
+                e.Graphics.DrawLines(pen, points.ToArray());
 
-                    Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
-                    Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
+                //for (int i = 1; i < points.Count; i++)
+                //{
+                //    Point prevPoint = new Point(points[i - 1].X, points[i - 1].Y);
+                //    Point currPoint = new Point(points[i].X, points[i].Y);
 
-                    double scale = 1;
-                    e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
-                }
+                //    Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
+                //    Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
+
+                //    double scale = 1;
+                //    e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
+                //}
             }
         }
+
+        private void CheckPosition(Point point)
+        {
+            if (point.X < canvas.Width)
+                point.X = canvas.Width;
+        }
+
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
