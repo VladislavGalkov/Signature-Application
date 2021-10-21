@@ -28,85 +28,147 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.canvas = new System.Windows.Forms.Panel();
-            this.cBoxUsers = new System.Windows.Forms.ComboBox();
-            this.cBoxSignatures = new System.Windows.Forms.ComboBox();
-            this.OKbutton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.LeftCanvas = new System.Windows.Forms.Panel();
+            this.cBoxUsers1 = new System.Windows.Forms.ComboBox();
+            this.cBoxSignatures1 = new System.Windows.Forms.ComboBox();
+            this.OkayButtonLeft = new System.Windows.Forms.Button();
+            this.cBoxUsers2 = new System.Windows.Forms.ComboBox();
+            this.cBoxSignatures2 = new System.Windows.Forms.ComboBox();
+            this.OkayButtonRight = new System.Windows.Forms.Button();
+            this.RightCanvas = new System.Windows.Forms.Panel();
+            this.lbDistance = new System.Windows.Forms.Label();
+            this.tbDistance = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // canvas
+            // LeftCanvas
             // 
-            this.canvas.Location = new System.Drawing.Point(12, 91);
-            this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(1217, 502);
-            this.canvas.TabIndex = 0;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            this.LeftCanvas.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.LeftCanvas.Location = new System.Drawing.Point(12, 168);
+            this.LeftCanvas.Name = "LeftCanvas";
+            this.LeftCanvas.Size = new System.Drawing.Size(621, 630);
+            this.LeftCanvas.TabIndex = 0;
+            this.LeftCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.LeftCanvas_Paint);
             // 
-            // cBoxUsers
+            // cBoxUsers1
             // 
-            this.cBoxUsers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBoxUsers.FormattingEnabled = true;
-            this.cBoxUsers.Location = new System.Drawing.Point(173, 40);
-            this.cBoxUsers.Name = "cBoxUsers";
-            this.cBoxUsers.Size = new System.Drawing.Size(149, 24);
-            this.cBoxUsers.TabIndex = 1;
-            this.cBoxUsers.SelectedIndexChanged += new System.EventHandler(this.cBoxUsers_SelectedIndexChanged);
+            this.cBoxUsers1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxUsers1.FormattingEnabled = true;
+            this.cBoxUsers1.Location = new System.Drawing.Point(33, 40);
+            this.cBoxUsers1.Name = "cBoxUsers1";
+            this.cBoxUsers1.Size = new System.Drawing.Size(149, 24);
+            this.cBoxUsers1.TabIndex = 1;
+            this.cBoxUsers1.SelectedIndexChanged += new System.EventHandler(this.cBoxUsers1_SelectedIndexChanged);
             // 
-            // cBoxSignatures
+            // cBoxSignatures1
             // 
-            this.cBoxSignatures.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBoxSignatures.FormattingEnabled = true;
-            this.cBoxSignatures.Location = new System.Drawing.Point(400, 40);
-            this.cBoxSignatures.Name = "cBoxSignatures";
-            this.cBoxSignatures.Size = new System.Drawing.Size(149, 24);
-            this.cBoxSignatures.TabIndex = 2;
+            this.cBoxSignatures1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxSignatures1.FormattingEnabled = true;
+            this.cBoxSignatures1.Location = new System.Drawing.Point(212, 40);
+            this.cBoxSignatures1.Name = "cBoxSignatures1";
+            this.cBoxSignatures1.Size = new System.Drawing.Size(149, 24);
+            this.cBoxSignatures1.TabIndex = 2;
             // 
-            // OKbutton
+            // OkayButtonLeft
             // 
-            this.OKbutton.Location = new System.Drawing.Point(760, 30);
-            this.OKbutton.Name = "OKbutton";
-            this.OKbutton.Size = new System.Drawing.Size(112, 43);
-            this.OKbutton.TabIndex = 3;
-            this.OKbutton.Text = "OK";
-            this.OKbutton.UseMnemonic = false;
-            this.OKbutton.UseVisualStyleBackColor = true;
-            this.OKbutton.Click += new System.EventHandler(this.OKbutton_Click);
+            this.OkayButtonLeft.Location = new System.Drawing.Point(140, 97);
+            this.OkayButtonLeft.Name = "OkayButtonLeft";
+            this.OkayButtonLeft.Size = new System.Drawing.Size(112, 43);
+            this.OkayButtonLeft.TabIndex = 3;
+            this.OkayButtonLeft.Text = "OK";
+            this.OkayButtonLeft.UseMnemonic = false;
+            this.OkayButtonLeft.UseVisualStyleBackColor = true;
+            this.OkayButtonLeft.Click += new System.EventHandler(this.OkayButtonLeft_Click);
             // 
-            // CancelButton
+            // cBoxUsers2
             // 
-            this.CancelButton.Location = new System.Drawing.Point(900, 30);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(112, 43);
-            this.CancelButton.TabIndex = 4;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseMnemonic = false;
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.cBoxUsers2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxUsers2.FormattingEnabled = true;
+            this.cBoxUsers2.Location = new System.Drawing.Point(703, 40);
+            this.cBoxUsers2.Name = "cBoxUsers2";
+            this.cBoxUsers2.Size = new System.Drawing.Size(149, 24);
+            this.cBoxUsers2.TabIndex = 4;
+            this.cBoxUsers2.SelectedIndexChanged += new System.EventHandler(this.cBoxUsers2_SelectedIndexChanged);
+            // 
+            // cBoxSignatures2
+            // 
+            this.cBoxSignatures2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxSignatures2.FormattingEnabled = true;
+            this.cBoxSignatures2.Location = new System.Drawing.Point(945, 40);
+            this.cBoxSignatures2.Name = "cBoxSignatures2";
+            this.cBoxSignatures2.Size = new System.Drawing.Size(149, 24);
+            this.cBoxSignatures2.TabIndex = 5;
+            // 
+            // OkayButtonRight
+            // 
+            this.OkayButtonRight.Location = new System.Drawing.Point(840, 97);
+            this.OkayButtonRight.Name = "OkayButtonRight";
+            this.OkayButtonRight.Size = new System.Drawing.Size(112, 43);
+            this.OkayButtonRight.TabIndex = 6;
+            this.OkayButtonRight.Text = "OK";
+            this.OkayButtonRight.UseMnemonic = false;
+            this.OkayButtonRight.UseVisualStyleBackColor = true;
+            this.OkayButtonRight.Click += new System.EventHandler(this.OkayButtonRight_Click);
+            // 
+            // RightCanvas
+            // 
+            this.RightCanvas.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.RightCanvas.Location = new System.Drawing.Point(686, 168);
+            this.RightCanvas.Name = "RightCanvas";
+            this.RightCanvas.Size = new System.Drawing.Size(621, 630);
+            this.RightCanvas.TabIndex = 7;
+            this.RightCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.RightCanvas_Paint);
+            // 
+            // lbDistance
+            // 
+            this.lbDistance.AutoSize = true;
+            this.lbDistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbDistance.Location = new System.Drawing.Point(436, 40);
+            this.lbDistance.Name = "lbDistance";
+            this.lbDistance.Size = new System.Drawing.Size(226, 25);
+            this.lbDistance.TabIndex = 8;
+            this.lbDistance.Text = "Average DTW distances";
+            // 
+            // tbDistance
+            // 
+            this.tbDistance.Location = new System.Drawing.Point(424, 107);
+            this.tbDistance.Name = "tbDistance";
+            this.tbDistance.Size = new System.Drawing.Size(238, 22);
+            this.tbDistance.TabIndex = 9;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1241, 605);
-            this.Controls.Add(this.CancelButton);
-            this.Controls.Add(this.OKbutton);
-            this.Controls.Add(this.cBoxSignatures);
-            this.Controls.Add(this.cBoxUsers);
-            this.Controls.Add(this.canvas);
+            this.ClientSize = new System.Drawing.Size(1319, 810);
+            this.Controls.Add(this.tbDistance);
+            this.Controls.Add(this.lbDistance);
+            this.Controls.Add(this.RightCanvas);
+            this.Controls.Add(this.OkayButtonRight);
+            this.Controls.Add(this.cBoxSignatures2);
+            this.Controls.Add(this.cBoxUsers2);
+            this.Controls.Add(this.OkayButtonLeft);
+            this.Controls.Add(this.cBoxSignatures1);
+            this.Controls.Add(this.cBoxUsers1);
+            this.Controls.Add(this.LeftCanvas);
             this.Name = "Form1";
             this.Text = "Signature Verification";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel canvas;
-        private System.Windows.Forms.ComboBox cBoxUsers;
-        private System.Windows.Forms.ComboBox cBoxSignatures;
-        private System.Windows.Forms.Button OKbutton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Panel LeftCanvas;
+        private System.Windows.Forms.ComboBox cBoxUsers1;
+        private System.Windows.Forms.ComboBox cBoxSignatures1;
+        private System.Windows.Forms.Button OkayButtonLeft;
+        private System.Windows.Forms.ComboBox cBoxUsers2;
+        private System.Windows.Forms.ComboBox cBoxSignatures2;
+        private System.Windows.Forms.Button OkayButtonRight;
+        private System.Windows.Forms.Panel RightCanvas;
+        private System.Windows.Forms.Label lbDistance;
+        private System.Windows.Forms.TextBox tbDistance;
     }
 }
 

@@ -22,23 +22,38 @@ namespace SignatureApp
             var keys = signatures.Parse().Keys.ToList(); //all users
             foreach (var user in keys)
             {
-                cBoxUsers.Items.Add(user);
+                cBoxUsers1.Items.Add(user);
+                cBoxUsers2.Items.Add(user);
             }
         }
 
-        private void OKbutton_Click(object sender, EventArgs e)
+        private void OkayButtonLeft_Click(object sender, EventArgs e)
         {
-            canvas.Invalidate();
+            LeftCanvas.Invalidate();
         }
 
+        private void OkayButtonRight_Click(object sender, EventArgs e)
+        {
+            RightCanvas.Invalidate();
+        }
 
-        private void cBoxUsers_SelectedIndexChanged(object sender, EventArgs e)
+        private void cBoxUsers1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowSignatures(cBoxUsers1, cBoxSignatures1);
+        }
+
+        private void cBoxUsers2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowSignatures(cBoxUsers2, cBoxSignatures2);
+        }
+
+        private void ShowSignatures(ComboBox users, ComboBox signs)
         {
             var dict = signatures.Parse();
-            var signaturesOfUser = dict[cBoxUsers.Text]; 
+            var signaturesOfUser = dict[users.Text];
             foreach (var sign in signaturesOfUser)
             {
-                cBoxSignatures.Items.Add(sign);
+                signs.Items.Add(sign);
             }
         }
 
@@ -47,18 +62,28 @@ namespace SignatureApp
 
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e)
+        private void LeftCanvas_Paint(object sender, PaintEventArgs e)
+        {
+            Draw(sender, e, cBoxUsers1, cBoxSignatures1, LeftCanvas);
+        }
+
+        private void RightCanvas_Paint(object sender, PaintEventArgs e)
+        {
+            Draw(sender, e, cBoxUsers2, cBoxSignatures2, RightCanvas);
+        }
+
+        private void Draw(object sender, PaintEventArgs e, ComboBox users, ComboBox signs, Panel canvas)
         {
             List<Point> points = new List<Point>();
             Pen pen = new Pen(Color.Black);
 
 
-            if (!cBoxUsers.Text.Equals("") && !cBoxSignatures.Text.Equals("")) // when the program starts both comboboxes are empty
+            if (!users.Text.Equals("") && !signs.Text.Equals("")) // when the program starts all comboboxes are empty
             {
                 //Trace.WriteLine(cBoxUsers.Text);
                 //Trace.WriteLine(cBoxSignatures.Text);
 
-                string path = signatures.DatabaseFolderPath + "\\" + cBoxUsers.Text + '_' + cBoxSignatures.Text + ".trj";
+                string path = signatures.DatabaseFolderPath + "\\" + users.Text + '_' + signs.Text + ".trj";
 
                 string[] lines = System.IO.File.ReadAllLines(path);
 
@@ -70,41 +95,59 @@ namespace SignatureApp
                     if (!Int32.Parse(parsed[0]).Equals(-1)) // when a line starts with '-1', it means the end of a stroke
                     {
                         Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
-                       // CheckPosition();
                         points.Add(p);
                     }
                 }
 
-               
+
                 var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
-                
+
                 e.Graphics.Transform = flipYMatrix;
-                e.Graphics.DrawLines(pen, points.ToArray());
+                // e.Graphics.DrawLines(pen, points.ToArray());
 
-                //for (int i = 1; i < points.Count; i++)
-                //{
-                //    Point prevPoint = new Point(points[i - 1].X, points[i - 1].Y);
-                //    Point currPoint = new Point(points[i].X, points[i].Y);
 
-                //    Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
-                //    Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
+                for (int i = 1; i < points.Count; i++)
+                {
+                    Point prevPoint = new Point(points[i - 1].X, points[i - 1].Y);
+                    Point currPoint = new Point(points[i].X, points[i].Y);
 
-                //    double scale = 1;
-                //    e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
-                //}
+
+                    Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
+                    Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
+
+                    double scale = 1;
+                    //e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
+                    e.Graphics.DrawLine(pen, prevPoint.X - 125, prevPoint.Y - 300, currPoint.X - 125, currPoint.Y - 300);
+                }
             }
         }
 
-        private void CheckPosition(Point point)
-        {
-            if (point.X < canvas.Width)
-                point.X = canvas.Width;
-        }
+        //private List<Point> CheckPosition(List<Point> points, Panel canvas)
+        //{
+        //    int count = 0;
+        //    foreach (var point in points)
+        //    {
+        //        if (point.Y > canvas.Height)
+        //        {
+        //            count++;
+        //            break;
+        //        }
+        //    }
+
+        //    foreach (var point in points)
+        //    {
+        //        point.Y = -150;
+        //    }
+        //}
+
+
 
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            canvas.Controls.Clear();
+            LeftCanvas.Controls.Clear();
         }
+
+     
     }
 }
