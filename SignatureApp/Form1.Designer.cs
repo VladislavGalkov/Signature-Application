@@ -36,8 +36,8 @@
             this.cBoxSignatures2 = new System.Windows.Forms.ComboBox();
             this.OkayButtonRight = new System.Windows.Forms.Button();
             this.RightCanvas = new System.Windows.Forms.Panel();
-            this.lbDistance = new System.Windows.Forms.Label();
             this.tbDistance = new System.Windows.Forms.TextBox();
+            this.bDTW = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LeftCanvas
@@ -118,30 +118,31 @@
             this.RightCanvas.TabIndex = 7;
             this.RightCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.RightCanvas_Paint);
             // 
-            // lbDistance
-            // 
-            this.lbDistance.AutoSize = true;
-            this.lbDistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbDistance.Location = new System.Drawing.Point(436, 40);
-            this.lbDistance.Name = "lbDistance";
-            this.lbDistance.Size = new System.Drawing.Size(226, 25);
-            this.lbDistance.TabIndex = 8;
-            this.lbDistance.Text = "Average DTW distances";
-            // 
             // tbDistance
             // 
-            this.tbDistance.Location = new System.Drawing.Point(424, 107);
+            this.tbDistance.Location = new System.Drawing.Point(465, 118);
             this.tbDistance.Name = "tbDistance";
             this.tbDistance.Size = new System.Drawing.Size(238, 22);
             this.tbDistance.TabIndex = 9;
+            // 
+            // bDTW
+            // 
+            this.bDTW.Location = new System.Drawing.Point(465, 40);
+            this.bDTW.Name = "bDTW";
+            this.bDTW.Size = new System.Drawing.Size(168, 43);
+            this.bDTW.TabIndex = 10;
+            this.bDTW.Text = "Average DTW distances";
+            this.bDTW.UseMnemonic = false;
+            this.bDTW.UseVisualStyleBackColor = true;
+            this.bDTW.Click += new System.EventHandler(this.bDTW_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1319, 810);
+            this.Controls.Add(this.bDTW);
             this.Controls.Add(this.tbDistance);
-            this.Controls.Add(this.lbDistance);
             this.Controls.Add(this.RightCanvas);
             this.Controls.Add(this.OkayButtonRight);
             this.Controls.Add(this.cBoxSignatures2);
@@ -167,8 +168,8 @@
         private System.Windows.Forms.ComboBox cBoxSignatures2;
         private System.Windows.Forms.Button OkayButtonRight;
         private System.Windows.Forms.Panel RightCanvas;
-        private System.Windows.Forms.Label lbDistance;
         private System.Windows.Forms.TextBox tbDistance;
+        private System.Windows.Forms.Button bDTW;
     }
 }
 
