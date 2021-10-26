@@ -23,6 +23,7 @@ namespace SignatureApp
         public double [,] CostMatrix { get; set; }
         public double [,] DistanceMatrix { get; set; }
         public Operations[,] BackTraceMatrix { get; set; }
+        public List<Point> Path { get; set; }
 
         public DTW(List<Point> list1, List<Point> list2)
         {
@@ -50,7 +51,7 @@ namespace SignatureApp
         public double DTWAlgorithm()
         {
             //var costMatrix = InitCostMatrix();
-            // var backTraceMatrix = new double[LSign.Count, RSign.Count]; //new matrix filled out with 0
+            var backTraceMatrix = new double[LSign.Count, RSign.Count]; //new matrix filled out with 0
             // List<double> operations = new List<double>();
 
            for (int i = 0; i < LSign.Count; i++)
@@ -60,10 +61,6 @@ namespace SignatureApp
                     double insertion = CostMatrix[i + 1, j];
                     double deletion = CostMatrix[i, j + 1];
 
-                    //operations.Clear();
-                    //operations.Add(Operations.MATCH);
-                    //operations.Add(Operations.INSERTION);
-                    //operations.Add(Operations.DELETION);
                     var min = GetMinimum(match, insertion, deletion);
 
                     CostMatrix[i + 1,  j + 1] = DistanceMatrix[i, j] + min;
@@ -83,22 +80,19 @@ namespace SignatureApp
                         BackTraceMatrix[i, j] = Operations.DELETION;
                     }
                 }
-
-            //return GetAlignment(BackTraceMatrix);
-
-            return CostMatrix[LSign.Count, RSign.Count]; //return top right corner element
+           return Math.Round(CostMatrix[LSign.Count, RSign.Count], 2); //return top right corner element
         }
 
-        private double GetAlignment(Operations[,] backTraceMatrix)
+        public List<Point> GetAlignment()
         {
-            backTraceMatrix = BackTraceMatrix;
+            Path = new List<Point>();
 
             //trace back from bottom right
 
             int i = LSign.Count - 1;
             int j = RSign.Count - 1;
 
-            var result = CostMatrix[i, j];
+            Path.Add(new Point(i, j));
 
             while (i > 0 || j > 0)
             {
@@ -124,10 +118,10 @@ namespace SignatureApp
                         break;
                 }
 
-                result += CostMatrix[i, j];
-                Trace.WriteLine("Result: " + result);
+                Path.Add(new Point(i, j));
+                Trace.WriteLine("Result: " + Path);
             }
-            return result;
+            return Path;
         }
 
         private double[,] InitCostMatrix()

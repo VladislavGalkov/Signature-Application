@@ -76,16 +76,20 @@ namespace SignatureApp
 
         private void Draw(object sender, PaintEventArgs e, ComboBox users, ComboBox signs, Panel canvas)
         {
-            //List<Point> points = new List<Point>();
-            List<Point> points = GetSignatureThroughComboboxes(users, signs);
+          // List<Point> points = new List<Point>();
             Pen pen = new Pen(Color.Black);
 
-
+            List<Point> points = GetSignatureThroughComboboxes(users, signs);
+            
             var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
 
             e.Graphics.Transform = flipYMatrix;
-            // e.Graphics.DrawLines(pen, points.ToArray());
 
+            //if (points.Count != 0)
+            //{
+            //    e.Graphics.DrawLines(pen, points.ToArray());
+            //    e.Graphics.ScaleTransform(1, -1);
+            //}
 
             for (int i = 1; i < points.Count; i++)
             {
@@ -98,7 +102,7 @@ namespace SignatureApp
 
                 double scale = 1;
                 //e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
-                e.Graphics.DrawLine(pen, prevPoint.X - 125, prevPoint.Y - 300, currPoint.X - 125, currPoint.Y - 300);
+                e.Graphics.DrawLine(pen, prevPoint.X - 110, prevPoint.Y - 300, currPoint.X - 110, currPoint.Y - 300);
             }
 
             #region OldDrawing
@@ -313,6 +317,14 @@ namespace SignatureApp
 
             DTW dtw = new DTW(signature1, signature2);
             var result = dtw.DTWAlgorithm();
+
+            //dtw.GetAlignment();
+            //List<Point> points = dtw.Path;
+
+            //foreach (var point in points)
+            //{
+            //   Trace.WriteLine($"[{point.X}, {point.Y}]"); 
+            //}
 
             tbDistance.Text = result.ToString(CultureInfo.InvariantCulture);
         }

@@ -53,7 +53,7 @@
             // 
             this.cBoxUsers1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxUsers1.FormattingEnabled = true;
-            this.cBoxUsers1.Location = new System.Drawing.Point(33, 40);
+            this.cBoxUsers1.Location = new System.Drawing.Point(48, 40);
             this.cBoxUsers1.Name = "cBoxUsers1";
             this.cBoxUsers1.Size = new System.Drawing.Size(149, 24);
             this.cBoxUsers1.TabIndex = 1;
@@ -63,14 +63,14 @@
             // 
             this.cBoxSignatures1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxSignatures1.FormattingEnabled = true;
-            this.cBoxSignatures1.Location = new System.Drawing.Point(212, 40);
+            this.cBoxSignatures1.Location = new System.Drawing.Point(313, 40);
             this.cBoxSignatures1.Name = "cBoxSignatures1";
             this.cBoxSignatures1.Size = new System.Drawing.Size(149, 24);
             this.cBoxSignatures1.TabIndex = 2;
             // 
             // OkayButtonLeft
             // 
-            this.OkayButtonLeft.Location = new System.Drawing.Point(140, 97);
+            this.OkayButtonLeft.Location = new System.Drawing.Point(201, 97);
             this.OkayButtonLeft.Name = "OkayButtonLeft";
             this.OkayButtonLeft.Size = new System.Drawing.Size(112, 43);
             this.OkayButtonLeft.TabIndex = 3;
@@ -83,7 +83,7 @@
             // 
             this.cBoxUsers2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxUsers2.FormattingEnabled = true;
-            this.cBoxUsers2.Location = new System.Drawing.Point(703, 40);
+            this.cBoxUsers2.Location = new System.Drawing.Point(822, 40);
             this.cBoxUsers2.Name = "cBoxUsers2";
             this.cBoxUsers2.Size = new System.Drawing.Size(149, 24);
             this.cBoxUsers2.TabIndex = 4;
@@ -93,14 +93,14 @@
             // 
             this.cBoxSignatures2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxSignatures2.FormattingEnabled = true;
-            this.cBoxSignatures2.Location = new System.Drawing.Point(945, 40);
+            this.cBoxSignatures2.Location = new System.Drawing.Point(1077, 40);
             this.cBoxSignatures2.Name = "cBoxSignatures2";
             this.cBoxSignatures2.Size = new System.Drawing.Size(149, 24);
             this.cBoxSignatures2.TabIndex = 5;
             // 
             // OkayButtonRight
             // 
-            this.OkayButtonRight.Location = new System.Drawing.Point(840, 97);
+            this.OkayButtonRight.Location = new System.Drawing.Point(965, 97);
             this.OkayButtonRight.Name = "OkayButtonRight";
             this.OkayButtonRight.Size = new System.Drawing.Size(112, 43);
             this.OkayButtonRight.TabIndex = 6;
@@ -120,14 +120,14 @@
             // 
             // tbDistance
             // 
-            this.tbDistance.Location = new System.Drawing.Point(465, 118);
+            this.tbDistance.Location = new System.Drawing.Point(546, 118);
             this.tbDistance.Name = "tbDistance";
             this.tbDistance.Size = new System.Drawing.Size(238, 22);
             this.tbDistance.TabIndex = 9;
             // 
             // bDTW
             // 
-            this.bDTW.Location = new System.Drawing.Point(465, 40);
+            this.bDTW.Location = new System.Drawing.Point(575, 40);
             this.bDTW.Name = "bDTW";
             this.bDTW.Size = new System.Drawing.Size(168, 43);
             this.bDTW.TabIndex = 10;
@@ -151,6 +151,7 @@
             this.Controls.Add(this.cBoxSignatures1);
             this.Controls.Add(this.cBoxUsers1);
             this.Controls.Add(this.LeftCanvas);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "Signature Verification";
             this.ResumeLayout(false);
