@@ -102,7 +102,7 @@ namespace SignatureApp
 
                 double scale = 1;
                 //e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
-                e.Graphics.DrawLine(pen, prevPoint.X - 110, prevPoint.Y - 300, currPoint.X - 110, currPoint.Y - 300);
+                e.Graphics.DrawLine(pen, (int) prevPoint.X/2, (int) prevPoint.Y/2, (int) currPoint.X/2, (int) currPoint.Y/2);
             }
 
             #region OldDrawing
@@ -318,12 +318,34 @@ namespace SignatureApp
             DTW dtw = new DTW(signature1, signature2);
             var result = dtw.DTWAlgorithm();
 
-            //dtw.GetAlignment();
+            var alignmentOperations = dtw.GetAlignment();
+
+
+            // var lSign = new List<Point>();
+            // lSign.Add(new Point(0, 0));
+            // //lSign.Add(new Point(0, 1));
+            // //lSign.Add(new Point(1, 1));
+
+            // var rSign = new List<Point>();
+            // rSign.Add(new Point(0, 0));
+            //// rSign.Add(new Point(0, 1));
+            // //rSign.Add(new Point(1, 1));
+            // rSign.Add(new Point(1, 2));
+            // rSign.Add(new Point(1, 3));
+
+            //  DTW dtw = new DTW(lSign, rSign);
+            //  var result = dtw.DTWAlgorithm();
+            //  var alignmentOperations = dtw.GetAlignment();
             //List<Point> points = dtw.Path;
 
-            //foreach (var point in points)
+            //foreach (var point in alignmentOperations.Item1)
             //{
-            //   Trace.WriteLine($"[{point.X}, {point.Y}]"); 
+            //    Trace.WriteLine($"Point: [{point.X}, {point.Y}]");
+            //}
+
+            //foreach (var oper in alignmentOperations.Item2)
+            //{
+            //    Trace.WriteLine($"Operation: {oper}");
             //}
 
             tbDistance.Text = result.ToString(CultureInfo.InvariantCulture);
