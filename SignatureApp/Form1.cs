@@ -316,9 +316,11 @@ namespace SignatureApp
             var signature2 = GetSignatureThroughComboboxes(cBoxUsers2, cBoxSignatures2);
 
             DTW dtw = new DTW(signature1, signature2);
-            var result = dtw.DTWAlgorithm();
+            var result = dtw.DTWAlgorithm(dtw.DistanceMatrix);
+            var DTWx = dtw.DTWAlgorithm(dtw.DistanceMatrixX);
+            var DTWy = dtw.DTWAlgorithm(dtw.DistanceMatrixY);
 
-            var alignmentOperations = dtw.GetAlignment();
+            //var alignmentOperations = dtw.GetAlignment();
 
 
             // var lSign = new List<Point>();
@@ -349,6 +351,8 @@ namespace SignatureApp
             //}
 
             tbDistance.Text = result.ToString(CultureInfo.InvariantCulture);
+            tbCostX.Text = DTWx.ToString(CultureInfo.InvariantCulture);
+            tbCostY.Text = DTWy.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

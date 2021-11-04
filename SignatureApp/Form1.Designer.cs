@@ -38,6 +38,11 @@
             this.RightCanvas = new System.Windows.Forms.Panel();
             this.tbDistance = new System.Windows.Forms.TextBox();
             this.bDTW = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbCostX = new System.Windows.Forms.TextBox();
+            this.tbCostY = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LeftCanvas
@@ -120,27 +125,76 @@
             // 
             // tbDistance
             // 
-            this.tbDistance.Location = new System.Drawing.Point(546, 118);
+            this.tbDistance.Location = new System.Drawing.Point(545, 61);
             this.tbDistance.Name = "tbDistance";
+            this.tbDistance.ReadOnly = true;
             this.tbDistance.Size = new System.Drawing.Size(238, 22);
             this.tbDistance.TabIndex = 9;
             // 
             // bDTW
             // 
-            this.bDTW.Location = new System.Drawing.Point(575, 40);
+            this.bDTW.Location = new System.Drawing.Point(576, 12);
             this.bDTW.Name = "bDTW";
             this.bDTW.Size = new System.Drawing.Size(168, 43);
             this.bDTW.TabIndex = 10;
-            this.bDTW.Text = "Average DTW distances";
+            this.bDTW.Text = "DTW distances";
             this.bDTW.UseMnemonic = false;
             this.bDTW.UseVisualStyleBackColor = true;
             this.bDTW.Click += new System.EventHandler(this.bDTW_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(493, 97);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "DTWx";
+            // 
+            // tbCostX
+            // 
+            this.tbCostX.Location = new System.Drawing.Point(545, 97);
+            this.tbCostX.Name = "tbCostX";
+            this.tbCostX.ReadOnly = true;
+            this.tbCostX.Size = new System.Drawing.Size(238, 22);
+            this.tbCostX.TabIndex = 12;
+            // 
+            // tbCostY
+            // 
+            this.tbCostY.Location = new System.Drawing.Point(545, 140);
+            this.tbCostY.Name = "tbCostY";
+            this.tbCostY.ReadOnly = true;
+            this.tbCostY.Size = new System.Drawing.Size(238, 22);
+            this.tbCostY.TabIndex = 13;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(493, 143);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 17);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "DTWy";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(478, 64);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 17);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "DTWDiff";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1319, 810);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.tbCostY);
+            this.Controls.Add(this.tbCostX);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.bDTW);
             this.Controls.Add(this.tbDistance);
             this.Controls.Add(this.RightCanvas);
@@ -171,6 +225,11 @@
         private System.Windows.Forms.Panel RightCanvas;
         private System.Windows.Forms.TextBox tbDistance;
         private System.Windows.Forms.Button bDTW;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbCostX;
+        private System.Windows.Forms.TextBox tbCostY;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

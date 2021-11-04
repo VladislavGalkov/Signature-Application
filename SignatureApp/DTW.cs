@@ -20,10 +20,12 @@ namespace SignatureApp
     {
         public List<Point> LSign { get; }
         public List<Point> RSign { get; }
-        public double [,] CostMatrix { get; set; }
-        public double [,] DistanceMatrix { get; set; }
-        public Operations[,] BackTraceMatrix { get; set; }
-        public List<Point> Path { get; set; }
+        public double [,] CostMatrix { get; }
+        public double [,] DistanceMatrix { get; }
+        public double[,] DistanceMatrixX { get; }
+        public double[,] DistanceMatrixY { get; }
+        public Operations[,] BackTraceMatrix { get; }
+        public List<Point> Path { get;}
 
         public DTW(List<Point> list1, List<Point> list2)
         {
@@ -32,6 +34,9 @@ namespace SignatureApp
             CostMatrix = InitCostMatrix();
             BackTraceMatrix = new Operations[LSign.Count, RSign.Count];
             DistanceMatrix = GetDistanceMatrix();
+            DistanceMatrixX = GetDistanceMatrixX();
+            DistanceMatrixY = GetDistanceMatrixY();
+            Path = new List<Point>();
         }
 
         private List<double> GetSignalValues(List<Point> sign)
@@ -75,7 +80,35 @@ namespace SignatureApp
             return result;
         }
 
-        public double DTWAlgorithm()
+        public double[,] GetDistanceMatrixX()
+        {
+            var result = new double[LSign.Count, RSign.Count];
+
+            for (int i = 0; i < LSign.Count - 1; i++)
+            {
+                for (int j = 0; j < RSign.Count - 1; j++)
+                {
+                    result[i, j] = Math.Abs(LSign[i].X - RSign[j].X);
+                }
+            }
+            return result;
+        }
+
+        public double[,] GetDistanceMatrixY()
+        {
+            var result = new double[LSign.Count, RSign.Count];
+
+            for (int i = 0; i < LSign.Count - 1; i++)
+            {
+                for (int j = 0; j < RSign.Count - 1; j++)
+                {
+                    result[i, j] = Math.Abs(LSign[i].Y - RSign[j].Y);
+                }
+            }
+            return result;
+        }
+
+        public double DTWAlgorithm(double[,] distanceMatrix)
         {
             var backTraceMatrix = new double[LSign.Count, RSign.Count]; //new matrix filled out with 0
 
@@ -88,7 +121,7 @@ namespace SignatureApp
 
                     var min = GetMinimum(match, insertion, deletion);
 
-                    CostMatrix[i + 1,  j + 1] = DistanceMatrix[i, j] + min;
+                    CostMatrix[i + 1,  j + 1] = distanceMatrix[i, j] + min;
 
                     if (min == match)
                     {
@@ -161,7 +194,7 @@ namespace SignatureApp
 
         public Tuple<List<Point>, List<Operations>> GetAlignment()
         {
-            Path = new List<Point>();
+          
             var operations = new List<Operations>();
 
             //trace back from bottom right
