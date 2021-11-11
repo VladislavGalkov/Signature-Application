@@ -79,30 +79,36 @@ namespace SignatureApp
           // List<Point> points = new List<Point>();
             Pen pen = new Pen(Color.Black);
 
-            List<Point> points = GetSignatureThroughComboboxes(users, signs);
-            
+            var points = GetSignatureThroughComboboxes(users, signs);
+           // var points = GetSignatureThroughComboboxes(users, signs).Select(p => new PointF(p.X, p.Y)).ToList(); //convert to List<PointF> 
+
             var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
 
             e.Graphics.Transform = flipYMatrix;
 
+            //Preprocessor preprocessor = new Preprocessor();
+            //preprocessor.ScaleAndShift(points);
+
+
+
             //if (points.Count != 0)
             //{
             //    e.Graphics.DrawLines(pen, points.ToArray());
-            //    e.Graphics.ScaleTransform(1, -1);
             //}
+
 
             for (int i = 1; i < points.Count; i++)
             {
-                Point prevPoint = new Point(points[i - 1].X, points[i - 1].Y);
-                Point currPoint = new Point(points[i].X, points[i].Y);
+                var prevPoint = new PointF(points[i - 1].X, points[i - 1].Y);
+                var currPoint = new PointF(points[i].X, points[i].Y);
 
 
                 Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
                 Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
 
-                double scale = 1;
                 //e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
                 e.Graphics.DrawLine(pen, (int) prevPoint.X/2, (int) prevPoint.Y/2, (int) currPoint.X/2, (int) currPoint.Y/2);
+               // e.Graphics.DrawLine(pen, (int)prevPoint.X, (int)prevPoint.Y, (int)currPoint.X, (int)currPoint.Y);
             }
 
             #region OldDrawing
@@ -155,9 +161,9 @@ namespace SignatureApp
             #endregion
         }
 
-        private List<Point> GetSignatureThroughComboboxes(ComboBox users, ComboBox signs)
+        private List<PointF> GetSignatureThroughComboboxes(ComboBox users, ComboBox signs)
         {
-            List<Point> result = new List<Point>();
+            var result = new List<PointF>();
 
             if (!users.Text.Equals("") && !signs.Text.Equals("")) // when the program starts all comboboxes are empty
             {
@@ -315,10 +321,23 @@ namespace SignatureApp
             var signature1 = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
             var signature2 = GetSignatureThroughComboboxes(cBoxUsers2, cBoxSignatures2);
 
-            DTW dtw = new DTW(signature1, signature2);
-            var result = dtw.DTWAlgorithm(dtw.DistanceMatrix);
-            var DTWx = dtw.DTWAlgorithm(dtw.DistanceMatrixX);
-            var DTWy = dtw.DTWAlgorithm(dtw.DistanceMatrixY);
+            DTW dtwOriginal = new DTW(signature1, signature2);
+            var result = dtwOriginal.DTWAlgorithm(dtwOriginal.DistanceMatrix);
+            var DTWx = dtwOriginal.DTWAlgorithm(dtwOriginal.DistanceMatrixX);
+            var DTWy = dtwOriginal.DTWAlgorithm(dtwOriginal.DistanceMatrixY);
+
+            var preprocessor = new Preprocessor();
+
+            signature1 = preprocessor.Scale(signature1);
+            signature1 = preprocessor.Shift(signature1);
+
+            signature2 = preprocessor.Scale(signature2);
+            signature2 = preprocessor.Shift(signature2);
+
+            DTW dtwPreProcess = new DTW(signature1, signature2);
+            var resultPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrix);
+            var DTWxPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixX);
+            var DTWyPreprocess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixY);
 
             //var alignmentOperations = dtw.GetAlignment();
 
@@ -353,6 +372,11 @@ namespace SignatureApp
             tbDistance.Text = result.ToString(CultureInfo.InvariantCulture);
             tbCostX.Text = DTWx.ToString(CultureInfo.InvariantCulture);
             tbCostY.Text = DTWy.ToString(CultureInfo.InvariantCulture);
+
+            tbDistancePreProcess.Text = resultPreProcess.ToString(CultureInfo.InvariantCulture);
+            tbCostXPreProcess.Text = DTWxPreProcess.ToString(CultureInfo.InvariantCulture);
+            tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture);
         }
+
     }
 }

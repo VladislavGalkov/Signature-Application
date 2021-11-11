@@ -18,16 +18,16 @@ namespace SignatureApp
 
     public class DTW
     {
-        public List<Point> LSign { get; }
-        public List<Point> RSign { get; }
+        public List<PointF> LSign { get; }
+        public List<PointF> RSign { get; }
         public double [,] CostMatrix { get; }
         public double [,] DistanceMatrix { get; }
         public double[,] DistanceMatrixX { get; }
         public double[,] DistanceMatrixY { get; }
         public Operations[,] BackTraceMatrix { get; }
-        public List<Point> Path { get;}
+        public List<PointF> Path { get;}
 
-        public DTW(List<Point> list1, List<Point> list2)
+        public DTW(List<PointF> list1, List<PointF> list2)
         {
             LSign = list1;
             RSign = list2;
@@ -36,10 +36,10 @@ namespace SignatureApp
             DistanceMatrix = GetDistanceMatrix();
             DistanceMatrixX = GetDistanceMatrixX();
             DistanceMatrixY = GetDistanceMatrixY();
-            Path = new List<Point>();
+            Path = new List<PointF>();
         }
 
-        private List<double> GetSignalValues(List<Point> sign)
+        private List<double> GetSignalValues(List<PointF> sign)
         {
             var result = new List<double>();
 
@@ -192,7 +192,7 @@ namespace SignatureApp
 
         #endregion
 
-        public Tuple<List<Point>, List<Operations>> GetAlignment()
+        public Tuple<List<PointF>, List<Operations>> GetAlignment()
         {
           
             var operations = new List<Operations>();
@@ -239,7 +239,7 @@ namespace SignatureApp
 
             Trace.WriteLine("-------------------");
             //PrintCostMatrix();
-            return new Tuple<List<Point>, List<Operations>>(Path, operations);
+            return new Tuple<List<PointF>, List<Operations>>(Path, operations);
         }
 
         private void PrintCostMatrix()
@@ -262,6 +262,6 @@ namespace SignatureApp
         }
 
         private Func<double, double, double, double> GetMinimum = (a, b, c) => Math.Min(a, Math.Min(b, c));
-        private Func<Point, Point, double> GetDistanceBetweenTwoPoints = (x, y) => Math.Sqrt(Math.Pow(x.X - y.X, 2) + Math.Pow(x.Y - y.Y, 2));
+        private Func<PointF, PointF, double> GetDistanceBetweenTwoPoints = (x, y) => Math.Sqrt(Math.Pow(x.X - y.X, 2) + Math.Pow(x.Y - y.Y, 2));
     }
 }
