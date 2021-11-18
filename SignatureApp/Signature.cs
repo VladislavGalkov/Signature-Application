@@ -84,5 +84,59 @@ namespace SignatureApp
             }
             return UserData;
         }
+
+        public List<PointF>[] GetFirstTenSignatures(string user)
+        {
+            var result = new List<PointF>[10];
+            var signatureNames = UserData[user].Take(10);
+            var top = 0;
+
+            foreach (var signatureName in signatureNames)
+            {
+                var signature = new List<PointF>();
+                string path = DatabaseFolderPath + "\\" + user + '_' + signatureName + ".trj";
+
+                string[] lines = System.IO.File.ReadAllLines(path);
+
+                for (int i = 1; i < lines.Length - 1; i++)
+                {
+                    string line = lines[i];
+                    string[] parsed = line.Split(' ');
+
+                    if (!Int32.Parse(parsed[0])
+                        .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
+                    {
+                        Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
+                        signature.Add(p);
+                    }
+                }
+                result[top++] = signature;
+            }
+
+            return result;
+        }
+
+        public List<PointF> CreateSignature(string user, string signName)
+        {
+            var result = new List<PointF>();
+            string path = DatabaseFolderPath + "\\" + user + '_' + signName + ".trj";
+
+            string[] lines = System.IO.File.ReadAllLines(path);
+
+            for (int i = 1; i < lines.Length - 1; i++)
+            {
+                string line = lines[i];
+                string[] parsed = line.Split(' ');
+
+                if (!Int32.Parse(parsed[0])
+                    .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
+                {
+                    Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
+                    result.Add(p);
+                }
+            }
+
+            return result;
+        }
     }
 }

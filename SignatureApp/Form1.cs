@@ -15,13 +15,12 @@ namespace SignatureApp
 {
     public partial class Form1 : Form
     {
-        readonly Signature signatures = new Signature();
-        //private List<List<Point>> DTWTest = new List<List<Point>>();
+        readonly Signature signatureAndUserDatabase = new Signature();
 
         public Form1()
         {
             InitializeComponent();
-            var keys = signatures.Parse().Keys.ToList(); //all users
+            var keys = signatureAndUserDatabase.Parse().Keys.ToList(); //all users
             foreach (var user in keys)
             {
                 cBoxUsers1.Items.Add(user);
@@ -51,7 +50,7 @@ namespace SignatureApp
 
         private void ShowSignatures(ComboBox users, ComboBox signs)
         {
-            var dict = signatures.Parse();
+            var dict = signatureAndUserDatabase.Parse();
             var signaturesOfUser = dict[users.Text];
             foreach (var sign in signaturesOfUser)
             {
@@ -170,22 +169,7 @@ namespace SignatureApp
                 //Trace.WriteLine(cBoxUsers.Text);
                 //Trace.WriteLine(cBoxSignatures.Text);
 
-                string path = signatures.DatabaseFolderPath + "\\" + users.Text + '_' + signs.Text + ".trj";
-
-                string[] lines = System.IO.File.ReadAllLines(path);
-
-                for (int i = 1; i < lines.Length - 1; i++)
-                {
-                    string line = lines[i];
-                    string[] parsed = line.Split(' ');
-
-                    if (!Int32.Parse(parsed[0])
-                        .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
-                    {
-                        Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
-                        result.Add(p);
-                    }
-                }
+                result = signatureAndUserDatabase.CreateSignature(users.Text, signs.Text);
             }
 
             return result;
@@ -396,6 +380,14 @@ namespace SignatureApp
             tbDistancePreProcess.Text = resultPreProcess.ToString(CultureInfo.InvariantCulture);
             tbCostXPreProcess.Text = DTWxPreProcess.ToString(CultureInfo.InvariantCulture);
             tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void bVerify_Click(object sender, EventArgs e)
+        {
+            var selectedSignature = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
+            var verifier = new Verifier(selectedSignature, signatureAndUserDatabase.GetFirstTenSignatures(cBoxUsers1.Text));
+
+           tbVerification.Text = verifier.IsGenuine() ? "The signature is genuine" : "The signature is forged";
         }
     }
 }
