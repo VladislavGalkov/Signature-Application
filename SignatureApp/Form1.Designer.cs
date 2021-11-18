@@ -48,6 +48,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tbCostYPreProcess = new System.Windows.Forms.TextBox();
+            this.rbZNorm = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // LeftCanvas
@@ -232,11 +233,24 @@
             this.tbCostYPreProcess.Size = new System.Drawing.Size(77, 22);
             this.tbCostYPreProcess.TabIndex = 20;
             // 
+            // rbZNorm
+            // 
+            this.rbZNorm.AutoSize = true;
+            this.rbZNorm.Location = new System.Drawing.Point(425, 113);
+            this.rbZNorm.Name = "rbZNorm";
+            this.rbZNorm.Size = new System.Drawing.Size(78, 21);
+            this.rbZNorm.TabIndex = 21;
+            this.rbZNorm.TabStop = true;
+            this.rbZNorm.Text = "Z-score";
+            this.rbZNorm.UseVisualStyleBackColor = true;
+            this.rbZNorm.CheckedChanged += new System.EventHandler(this.rbZNorm_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1319, 810);
+            this.Controls.Add(this.rbZNorm);
             this.Controls.Add(this.tbCostYPreProcess);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -287,6 +301,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbCostYPreProcess;
+        private System.Windows.Forms.RadioButton rbZNorm;
     }
 }
 

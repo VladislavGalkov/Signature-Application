@@ -318,6 +318,8 @@ namespace SignatureApp
 
         private void bDTW_Click(object sender, EventArgs e)
         {
+            rbZNorm.Checked = false;
+
             var signature1 = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
             var signature2 = GetSignatureThroughComboboxes(cBoxUsers2, cBoxSignatures2);
 
@@ -378,5 +380,22 @@ namespace SignatureApp
             tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture);
         }
 
+        private void rbZNorm_CheckedChanged(object sender, EventArgs e)
+        {
+            var signature1 = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
+            var signature2 = GetSignatureThroughComboboxes(cBoxUsers2, cBoxSignatures2);
+            var Normalizator = new Normalization();
+            signature1 = Normalizator.Normalize(signature1);
+            signature2 = Normalizator.Normalize(signature2);
+
+            DTW dtwPreProcess = new DTW(signature1, signature2);
+            var resultPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrix);
+            var DTWxPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixX);
+            var DTWyPreprocess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixY);
+
+            tbDistancePreProcess.Text = resultPreProcess.ToString(CultureInfo.InvariantCulture);
+            tbCostXPreProcess.Text = DTWxPreProcess.ToString(CultureInfo.InvariantCulture);
+            tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }
