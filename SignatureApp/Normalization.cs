@@ -18,7 +18,7 @@ namespace SignatureApp
 
             foreach (var point in signature)
             {
-                result.Add(new PointF((point.X - mean) / SD, point.Y));
+                result.Add(new PointF((point.X - mean) / SD, (point.Y - mean) / SD));
             }
         
             return result;

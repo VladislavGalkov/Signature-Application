@@ -41,10 +41,12 @@ namespace SignatureApp
             return shiftedSignature;
         }
 
-        //public void ScaleAndShift(List<PointF> signature)
-        //{ 
-        //    signature = Scale(signature);
-        //    signature = Shift(signature);
-        //}
+        public List<PointF> ScaleAndShift(List<PointF> signature)
+        {
+            signature = Scale(signature);
+            signature = Shift(signature);
+
+            return signature;
+        }
     }
 }

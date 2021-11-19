@@ -16,6 +16,8 @@ namespace SignatureApp
     public partial class Form1 : Form
     {
         readonly Signature signatureAndUserDatabase = new Signature();
+        public List<PointF> LSign { get; set; }
+        public List<PointF> RSign { get; set; }
 
         public Form1()
         {
@@ -75,11 +77,9 @@ namespace SignatureApp
 
         private void Draw(object sender, PaintEventArgs e, ComboBox users, ComboBox signs, Panel canvas)
         {
-          // List<Point> points = new List<Point>();
             Pen pen = new Pen(Color.Black);
 
-            var points = GetSignatureThroughComboboxes(users, signs);
-           // var points = GetSignatureThroughComboboxes(users, signs).Select(p => new PointF(p.X, p.Y)).ToList(); //convert to List<PointF> 
+            var points = GetOriginalSignatureFromCombobox(users, signs);
 
             var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
 
@@ -160,7 +160,7 @@ namespace SignatureApp
             #endregion
         }
 
-        private List<PointF> GetSignatureThroughComboboxes(ComboBox users, ComboBox signs)
+        private List<PointF> GetOriginalSignatureFromCombobox(ComboBox users, ComboBox signs)
         {
             var result = new List<PointF>();
 
@@ -298,33 +298,31 @@ namespace SignatureApp
             LeftCanvas.Controls.Clear();
         }
 
-    
+
 
         private void bDTW_Click(object sender, EventArgs e)
         {
             rbZNorm.Checked = false;
 
-            var signature1 = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
-            var signature2 = GetSignatureThroughComboboxes(cBoxUsers2, cBoxSignatures2);
+            LSign = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
+            RSign = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
 
-            DTW dtwOriginal = new DTW(signature1, signature2);
+            DTW dtwOriginal = new DTW(LSign, RSign);
             var result = dtwOriginal.DTWAlgorithm(dtwOriginal.DistanceMatrix);
             var DTWx = dtwOriginal.DTWAlgorithm(dtwOriginal.DistanceMatrixX);
             var DTWy = dtwOriginal.DTWAlgorithm(dtwOriginal.DistanceMatrixY);
 
             var preprocessor = new Preprocessor();
 
-            signature1 = preprocessor.Scale(signature1);
-            signature1 = preprocessor.Shift(signature1);
+            LSign = preprocessor.ScaleAndShift(LSign);
+            RSign = preprocessor.ScaleAndShift(RSign);
 
-            signature2 = preprocessor.Scale(signature2);
-            signature2 = preprocessor.Shift(signature2);
-
-            DTW dtwPreProcess = new DTW(signature1, signature2);
+            DTW dtwPreProcess = new DTW(LSign, RSign);
             var resultPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrix);
             var DTWxPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixX);
             var DTWyPreprocess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixY);
 
+            #region Alignment
             //var alignmentOperations = dtw.GetAlignment();
 
 
@@ -355,6 +353,8 @@ namespace SignatureApp
             //    Trace.WriteLine($"Operation: {oper}");
             //}
 
+            #endregion
+
             tbDistance.Text = result.ToString(CultureInfo.InvariantCulture);
             tbCostX.Text = DTWx.ToString(CultureInfo.InvariantCulture);
             tbCostY.Text = DTWy.ToString(CultureInfo.InvariantCulture);
@@ -366,28 +366,40 @@ namespace SignatureApp
 
         private void rbZNorm_CheckedChanged(object sender, EventArgs e)
         {
-            var signature1 = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
-            var signature2 = GetSignatureThroughComboboxes(cBoxUsers2, cBoxSignatures2);
             var Normalizator = new Normalization();
-            signature1 = Normalizator.Normalize(signature1);
-            signature2 = Normalizator.Normalize(signature2);
+            LSign = Normalizator.Normalize(LSign);
+            RSign = Normalizator.Normalize(RSign);
 
-            DTW dtwPreProcess = new DTW(signature1, signature2);
+            DTW dtwPreProcess = new DTW(LSign, RSign);
             var resultPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrix);
             var DTWxPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixX);
-            var DTWyPreprocess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixY);
+            var DTWyPreprocess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrixY); 
 
             tbDistancePreProcess.Text = resultPreProcess.ToString(CultureInfo.InvariantCulture);
             tbCostXPreProcess.Text = DTWxPreProcess.ToString(CultureInfo.InvariantCulture);
-            tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture);
+            tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture); 
         }
 
         private void bVerify_Click(object sender, EventArgs e)
         {
-            var selectedSignature = GetSignatureThroughComboboxes(cBoxUsers1, cBoxSignatures1);
-            var verifier = new Verifier(selectedSignature, signatureAndUserDatabase.GetFirstTenSignatures(cBoxUsers1.Text));
-
-           tbVerification.Text = verifier.IsGenuine() ? "The signature is genuine" : "The signature is forged";
+            var verifierLeft = new Verifier(LSign, signatureAndUserDatabase.GetFirstTenSignatures(cBoxUsers1.Text));
+            var verifierRight = new Verifier(RSign, signatureAndUserDatabase.GetFirstTenSignatures(cBoxUsers2.Text));
+            tbVerificationLeft.Text = verifierLeft.IsGenuine() ? "The signature on the left is genuine" : "The signature on the left is forged";
+            tbVerificationRight.Text = verifierRight.IsGenuine() ? "The signature on the right is genuine" : "The signature on the right is forged";
         }
+
+        //private void cBoxSignatures2_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
+
+        //    RSign = signature;
+        //}
+
+        //private void cBoxSignatures1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
+
+        //    LSign = signature;
+        //}
     }
 }

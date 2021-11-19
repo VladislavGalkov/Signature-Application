@@ -49,16 +49,17 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tbCostYPreProcess = new System.Windows.Forms.TextBox();
             this.rbZNorm = new System.Windows.Forms.RadioButton();
-            this.tbVerification = new System.Windows.Forms.TextBox();
+            this.tbVerificationLeft = new System.Windows.Forms.TextBox();
             this.bVerify = new System.Windows.Forms.Button();
+            this.tbVerificationRight = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // LeftCanvas
             // 
             this.LeftCanvas.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.LeftCanvas.Location = new System.Drawing.Point(12, 280);
+            this.LeftCanvas.Location = new System.Drawing.Point(12, 300);
             this.LeftCanvas.Name = "LeftCanvas";
-            this.LeftCanvas.Size = new System.Drawing.Size(621, 518);
+            this.LeftCanvas.Size = new System.Drawing.Size(621, 498);
             this.LeftCanvas.TabIndex = 0;
             this.LeftCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.LeftCanvas_Paint);
             // 
@@ -80,6 +81,7 @@
             this.cBoxSignatures1.Name = "cBoxSignatures1";
             this.cBoxSignatures1.Size = new System.Drawing.Size(149, 24);
             this.cBoxSignatures1.TabIndex = 2;
+            //this.cBoxSignatures1.SelectedIndexChanged += new System.EventHandler(this.cBoxSignatures1_SelectedIndexChanged);
             // 
             // OkayButtonLeft
             // 
@@ -110,6 +112,7 @@
             this.cBoxSignatures2.Name = "cBoxSignatures2";
             this.cBoxSignatures2.Size = new System.Drawing.Size(149, 24);
             this.cBoxSignatures2.TabIndex = 5;
+            //this.cBoxSignatures2.SelectedIndexChanged += new System.EventHandler(this.cBoxSignatures2_SelectedIndexChanged);
             // 
             // OkayButtonRight
             // 
@@ -125,9 +128,9 @@
             // RightCanvas
             // 
             this.RightCanvas.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.RightCanvas.Location = new System.Drawing.Point(686, 280);
+            this.RightCanvas.Location = new System.Drawing.Point(686, 300);
             this.RightCanvas.Name = "RightCanvas";
-            this.RightCanvas.Size = new System.Drawing.Size(621, 518);
+            this.RightCanvas.Size = new System.Drawing.Size(621, 498);
             this.RightCanvas.TabIndex = 7;
             this.RightCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.RightCanvas_Paint);
             // 
@@ -247,17 +250,17 @@
             this.rbZNorm.UseVisualStyleBackColor = true;
             this.rbZNorm.CheckedChanged += new System.EventHandler(this.rbZNorm_CheckedChanged);
             // 
-            // tbVerification
+            // tbVerificationLeft
             // 
-            this.tbVerification.Location = new System.Drawing.Point(478, 243);
-            this.tbVerification.Name = "tbVerification";
-            this.tbVerification.ReadOnly = true;
-            this.tbVerification.Size = new System.Drawing.Size(391, 22);
-            this.tbVerification.TabIndex = 22;
+            this.tbVerificationLeft.Location = new System.Drawing.Point(479, 233);
+            this.tbVerificationLeft.Name = "tbVerificationLeft";
+            this.tbVerificationLeft.ReadOnly = true;
+            this.tbVerificationLeft.Size = new System.Drawing.Size(391, 22);
+            this.tbVerificationLeft.TabIndex = 22;
             // 
             // bVerify
             // 
-            this.bVerify.Location = new System.Drawing.Point(592, 194);
+            this.bVerify.Location = new System.Drawing.Point(592, 184);
             this.bVerify.Name = "bVerify";
             this.bVerify.Size = new System.Drawing.Size(168, 43);
             this.bVerify.TabIndex = 23;
@@ -266,13 +269,22 @@
             this.bVerify.UseVisualStyleBackColor = true;
             this.bVerify.Click += new System.EventHandler(this.bVerify_Click);
             // 
+            // tbVerificationRight
+            // 
+            this.tbVerificationRight.Location = new System.Drawing.Point(479, 261);
+            this.tbVerificationRight.Name = "tbVerificationRight";
+            this.tbVerificationRight.ReadOnly = true;
+            this.tbVerificationRight.Size = new System.Drawing.Size(391, 22);
+            this.tbVerificationRight.TabIndex = 24;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1319, 810);
+            this.Controls.Add(this.tbVerificationRight);
             this.Controls.Add(this.bVerify);
-            this.Controls.Add(this.tbVerification);
+            this.Controls.Add(this.tbVerificationLeft);
             this.Controls.Add(this.rbZNorm);
             this.Controls.Add(this.tbCostYPreProcess);
             this.Controls.Add(this.label5);
@@ -325,8 +337,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbCostYPreProcess;
         private System.Windows.Forms.RadioButton rbZNorm;
-        private System.Windows.Forms.TextBox tbVerification;
+        private System.Windows.Forms.TextBox tbVerificationLeft;
         private System.Windows.Forms.Button bVerify;
+        private System.Windows.Forms.TextBox tbVerificationRight;
     }
 }
 
