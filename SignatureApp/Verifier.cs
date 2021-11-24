@@ -12,25 +12,26 @@ namespace SignatureApp
         public List<PointF> SelectedSignature { get; }
         private double[,] ReferenceMatrix { get; }
 
-        List<PointF>[] FirstTenSignatures { get; }
+        List<PointF>[] References { get; }
 
-        public Verifier(List<PointF> selectedSignature, List<PointF>[] firstTenSignatures)
+
+        public Verifier(List<PointF> selectedSignature, List<PointF>[] referenceSignatures)
         {
             SelectedSignature = selectedSignature;
-            FirstTenSignatures = firstTenSignatures;
-            FirstTenSignatures = PreprocessTenSignatures();
+            References = referenceSignatures;
+            References = PreprocessReferenceSignatures();
 
             ReferenceMatrix = GetReferenceMatrix();
         }
 
         private double[,] GetReferenceMatrix()
         {
-            var result = new double[FirstTenSignatures.Length, FirstTenSignatures.Length];
+            var result = new double[References.Length, References.Length];
 
-            for (int i = 0; i < FirstTenSignatures.Length; i++)
-                for (int j = 0; i > j; j++) // j <= i since we do not want to calculate the same DTW twice 
+            for (int i = 0; i < References.Length; i++)
+                for (int j = 0; i > j; j++) // i > j since we do not want to calculate the same DTW twice 
                 {
-                    var dtw = new DTW(FirstTenSignatures[i], FirstTenSignatures[j]);
+                    var dtw = new DTW(References[i], References[j]);
                     result[i, j] = dtw.DTWAlgorithm(dtw.DistanceMatrixX);
                 }
                                
@@ -60,7 +61,7 @@ namespace SignatureApp
         {
             var result = new List<double>();
 
-            foreach (var sign in FirstTenSignatures)
+            foreach (var sign in References)
             {
                 var dtw = new DTW(selectedSignature, sign);
                 result.Add(dtw.DTWAlgorithm(dtw.DistanceMatrixX));
@@ -87,19 +88,19 @@ namespace SignatureApp
         {
             var referenceAverage = GetReferenceAverage();
             var average = GetAverage();
-
+            
             return average <= referenceAverage;
         }
 
-        private List<PointF>[] PreprocessTenSignatures()
+        private List<PointF>[] PreprocessReferenceSignatures()
         {
             var preprocessor = new Preprocessor();
             var normalizer = new Normalization();
 
             var result = new List<PointF>[10];
-            for (int i = 0; i < FirstTenSignatures.Length; i++)
+            for (int i = 0; i < References.Length; i++)
             {
-                var signature = FirstTenSignatures[i];
+                var signature = References[i];
                 signature = preprocessor.ScaleAndShift(signature);
                 signature = normalizer.Normalize(signature);
                 result[i] = signature;

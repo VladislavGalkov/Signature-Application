@@ -85,10 +85,12 @@ namespace SignatureApp
             return UserData;
         }
 
-        public List<PointF>[] GetFirstTenSignatures(string user)
+        public List<PointF>[] GetReferenceSignatures(string user)
         {
             var result = new List<PointF>[10];
-            var signatureNames = UserData[user].Take(10);
+            string[] r_10 = { "R_10" }; 
+            List<string> signatureNames = UserData[user].Where(x => x.StartsWith("R")).Except(r_10).ToList();
+            signatureNames.Add(r_10[0]); 
             var top = 0;
 
             foreach (var signatureName in signatureNames)

@@ -54,10 +54,31 @@ namespace SignatureApp
         {
             var dict = signatureAndUserDatabase.Parse();
             var signaturesOfUser = dict[users.Text];
-            foreach (var sign in signaturesOfUser)
+
+            // to sort signatures 
+            signaturesOfUser = signaturesOfUser.Except(new[] { "R_10" }).ToList();
+            signaturesOfUser.Add("R_10"); 
+
+            if (signs.Items.Count == 0)
+            {
+                signs = GetSignatures(signs, signaturesOfUser);
+            }
+
+            else
+            {
+                signs.Items.Clear();
+                signs = GetSignatures(signs, signaturesOfUser);
+            }
+        }
+
+        private ComboBox GetSignatures(ComboBox signs, List<string> signatures)
+        {
+            foreach (var sign in signatures)
             {
                 signs.Items.Add(sign);
             }
+
+            return signs;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -382,8 +403,8 @@ namespace SignatureApp
 
         private void bVerify_Click(object sender, EventArgs e)
         {
-            var verifierLeft = new Verifier(LSign, signatureAndUserDatabase.GetFirstTenSignatures(cBoxUsers1.Text));
-            var verifierRight = new Verifier(RSign, signatureAndUserDatabase.GetFirstTenSignatures(cBoxUsers2.Text));
+            var verifierLeft = new Verifier(LSign, signatureAndUserDatabase.GetReferenceSignatures(cBoxUsers1.Text));
+            var verifierRight = new Verifier(RSign, signatureAndUserDatabase.GetReferenceSignatures(cBoxUsers2.Text));
             tbVerificationLeft.Text = verifierLeft.IsGenuine() ? "The signature on the left is genuine" : "The signature on the left is forged";
             tbVerificationRight.Text = verifierRight.IsGenuine() ? "The signature on the right is genuine" : "The signature on the right is forged";
         }
