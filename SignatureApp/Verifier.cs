@@ -19,7 +19,7 @@ namespace SignatureApp
         {
             SelectedSignature = selectedSignature;
             References = referenceSignatures;
-            References = PreprocessReferenceSignatures();
+           // References = PreprocessReferenceSignatures();
 
             ReferenceMatrix = GetReferenceMatrix();
         }
@@ -38,7 +38,7 @@ namespace SignatureApp
             return result; 
         }
 
-        private double GetReferenceAverage()
+        public double GetReferenceAverage()
         {
             double sum = 0;
             var count = 0; 

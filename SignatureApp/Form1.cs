@@ -335,8 +335,8 @@ namespace SignatureApp
 
             var preprocessor = new Preprocessor();
 
-            LSign = preprocessor.ScaleAndShift(LSign);
-            RSign = preprocessor.ScaleAndShift(RSign);
+            //LSign = preprocessor.ScaleAndShift(LSign);
+           // RSign = preprocessor.ScaleAndShift(RSign);
 
             DTW dtwPreProcess = new DTW(LSign, RSign);
             var resultPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrix);
