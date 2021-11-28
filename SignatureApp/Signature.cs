@@ -19,6 +19,10 @@ namespace SignatureApp
 
         public string DatabaseFolderPath => databaseFolderPath;
 
+        public Signature()
+        {
+            UserData = Parse();
+        }
         private void GetDatabaseFolderPath()
         {
             string exePath = Environment.CurrentDirectory; //folder where .exe is located
@@ -27,6 +31,7 @@ namespace SignatureApp
             this.databaseFolderPath = Path.Combine(binDir.ToString(), @"Database").ToString(); 
         }
 
+      
         private IEnumerable<string> GetSignatureFileNames()
         {
             GetDatabaseFolderPath();
@@ -85,38 +90,7 @@ namespace SignatureApp
             return UserData;
         }
 
-        public List<PointF>[] GetReferenceSignatures(string user)
-        {
-            var result = new List<PointF>[10];
-            string[] r_10 = { "R_10" }; 
-            List<string> signatureNames = UserData[user].Where(x => x.StartsWith("R")).Except(r_10).ToList();
-            signatureNames.Add(r_10[0]); 
-            var top = 0;
-
-            foreach (var signatureName in signatureNames)
-            {
-                var signature = new List<PointF>();
-                string path = DatabaseFolderPath + "\\" + user + '_' + signatureName + ".trj";
-
-                string[] lines = System.IO.File.ReadAllLines(path);
-
-                for (int i = 1; i < lines.Length - 1; i++)
-                {
-                    string line = lines[i];
-                    string[] parsed = line.Split(' ');
-
-                    if (!Int32.Parse(parsed[0])
-                        .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
-                    {
-                        Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
-                        signature.Add(p);
-                    }
-                }
-                result[top++] = signature;
-            }
-
-            return result;
-        }
+        
 
         public List<PointF> CreateSignature(string user, string signName)
         {
@@ -141,43 +115,48 @@ namespace SignatureApp
             return result;
         }
 
-        public List<PointF>[] GetSignatures(string user)
+        public List<string> GetSignatureNames(string user)
         {
-            var result = new List<PointF>[UserData[user].Count];
             string[] r_10 = { "R_10" };
-            List<string> signatureNames = UserData[user].Where(x => x.StartsWith("R")).Except(r_10).ToList();
-            signatureNames.Add(r_10[0]);
-            var top = 0;
-
-            foreach (var signatureName in signatureNames)
-            {
-                var signature = new List<PointF>();
-                string path = DatabaseFolderPath + "\\" + user + '_' + signatureName + ".trj";
-
-                string[] lines = System.IO.File.ReadAllLines(path);
-
-                for (int i = 1; i < lines.Length - 1; i++)
-                {
-                    string line = lines[i];
-                    string[] parsed = line.Split(' ');
-
-                    if (!Int32.Parse(parsed[0])
-                        .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
-                    {
-                        Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
-                        signature.Add(p);
-                    }
-                }
-                result[top++] = signature;
-            }
+            List<string> result = UserData[user].Except(r_10).ToList();
+            result.Add(r_10[0]);
 
             return result;
         }
 
-        public List<PointF>[] GetForgedSignatures(string user)
+        public List<PointF>[] GetSignatures(string user, char type, bool preprocess)
         {
-            List<string> signatureNames = UserData[user].Where(x => x.StartsWith("F")).ToList();
-            var result = new List<PointF>[signatureNames.Count];
+            Preprocessor preprocessor = new Preprocessor();
+            var signatureNames = GetSignatureNames(user);
+
+            List<PointF>[] result = null;
+
+            switch (type)
+            {
+                case 'R':
+                    {
+                        signatureNames = signatureNames.Where(x => x.StartsWith("R")).ToList(); 
+                        result = new List<PointF>[signatureNames.Count];
+                    }
+                    break;
+
+                case 'F':
+                    {
+                        signatureNames = signatureNames.Where(x => x.StartsWith("F")).ToList();
+                        result = new List<PointF>[signatureNames.Count];
+                    }
+                    break;
+
+                case 'G':
+                    {
+                        signatureNames = signatureNames.Where(x => x.StartsWith("G")).ToList();
+                        result = new List<PointF>[signatureNames.Count];
+                    }
+                    break;
+
+                default: result = new List<PointF>[signatureNames.Count];
+                    break;
+            }
             var top = 0;
 
             foreach (var signatureName in signatureNames)
@@ -199,41 +178,88 @@ namespace SignatureApp
                         signature.Add(p);
                     }
                 }
+
+                if (preprocess)
+                    signature = preprocessor.Preprocess(signature);
                 result[top++] = signature;
             }
 
             return result;
         }
 
-        public List<PointF>[] GetGenuineSignatures(string user)
-        {
-            List<string> signatureNames = UserData[user].Where(x => x.StartsWith("G")).ToList();
-            var result = new List<PointF>[signatureNames.Count];
-            var top = 0;
+        //public List<PointF>[] GetReferenceSignatures(string user)
+        //{
+        //    var result = new List<PointF>[10];
+        //    string[] r_10 = { "R_10" };
+        //    List<string> signatureNames = UserData[user].Where(x => x.StartsWith("R")).Except(r_10).ToList();
+        //    signatureNames.Add(r_10[0]);
+        //    var top = 0;
 
-            foreach (var signatureName in signatureNames)
-            {
-                var signature = new List<PointF>();
-                string path = DatabaseFolderPath + "\\" + user + '_' + signatureName + ".trj";
+        //    foreach (var signatureName in signatureNames)
+        //    {
+        //        var signature = new List<PointF>();
+        //        string path = DatabaseFolderPath + "\\" + user + '_' + signatureName + ".trj";
 
-                string[] lines = System.IO.File.ReadAllLines(path);
+        //        string[] lines = System.IO.File.ReadAllLines(path);
 
-                for (int i = 1; i < lines.Length - 1; i++)
-                {
-                    string line = lines[i];
-                    string[] parsed = line.Split(' ');
+        //        for (int i = 1; i < lines.Length - 1; i++)
+        //        {
+        //            string line = lines[i];
+        //            string[] parsed = line.Split(' ');
 
-                    if (!Int32.Parse(parsed[0])
-                        .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
-                    {
-                        Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
-                        signature.Add(p);
-                    }
-                }
-                result[top++] = signature;
-            }
+        //            if (!Int32.Parse(parsed[0])
+        //                .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
+        //            {
+        //                Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
+        //                signature.Add(p);
+        //            }
+        //        }
+        //        result[top++] = signature;
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
+        //public List<PointF>[] GetForgedSignatures(string user, bool preprocess)
+        //{
+        //    var allSignatureNames = GetSignatureNames(user);
+        //    var forgedSignatureNames = allSignatureNames.Where(x => x.StartsWith("F")).ToList();
+        //    var signatures = GetSignatures(user, preprocess);
+        //    //return signatures.Where(x => x.StartsWith("F")).ToList();
+        //}
+
+        //public List<PointF>[] GetGenuineSignatures(string user, bool preprocess)
+        //{
+        //    Preprocessor preprocessor = new Preprocessor();
+        //    List<string> signatureNames = UserData[user].Where(x => x.StartsWith("G")).ToList();
+        //    var result = new List<PointF>[signatureNames.Count];
+        //    var top = 0;
+
+        //    foreach (var signatureName in signatureNames)
+        //    {
+        //        var signature = new List<PointF>();
+        //        string path = DatabaseFolderPath + "\\" + user + '_' + signatureName + ".trj";
+
+        //        string[] lines = System.IO.File.ReadAllLines(path);
+
+        //        for (int i = 1; i < lines.Length - 1; i++)
+        //        {
+        //            string line = lines[i];
+        //            string[] parsed = line.Split(' ');
+
+        //            if (!Int32.Parse(parsed[0])
+        //                .Equals(-1)) // when a line starts with '-1', it means the end of a stroke
+        //            {
+        //                Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
+        //                signature.Add(p);
+        //            }
+        //        }
+            
+        //        if (preprocess)
+        //            signature = preprocessor.Preprocess(signature);
+        //        result[top++] = signature;
+        //    }
+
+        //    return result;
+        //}
     }
 }

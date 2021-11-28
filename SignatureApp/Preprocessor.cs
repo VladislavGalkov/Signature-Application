@@ -48,5 +48,14 @@ namespace SignatureApp
 
             return signature;
         }
+
+        public List<PointF> Preprocess(List<PointF> signature)
+        {
+            var normalizer = new Normalization();
+            signature = ScaleAndShift(signature);
+            signature = normalizer.Normalize(signature);
+
+            return signature;
+        }
     }
 }

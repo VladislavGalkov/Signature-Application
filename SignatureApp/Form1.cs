@@ -33,11 +33,14 @@ namespace SignatureApp
         private void OkayButtonLeft_Click(object sender, EventArgs e)
         {
             LeftCanvas.Invalidate();
+           // LSign = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
+            
         }
 
         private void OkayButtonRight_Click(object sender, EventArgs e)
         {
             RightCanvas.Invalidate();
+           // RSign = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
         }
 
         private void cBoxUsers1_SelectedIndexChanged(object sender, EventArgs e)
@@ -50,14 +53,23 @@ namespace SignatureApp
             ShowSignatures(cBoxUsers2, cBoxSignatures2);
         }
 
+        //private void cBoxSignatures1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
+
+        //    LSign = signature;
+        //}
+        //private void cBoxSignatures2_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
+
+        //    RSign = signature;
+        //}
+
         private void ShowSignatures(ComboBox users, ComboBox signs)
         {
-            var dict = signatureAndUserDatabase.Parse();
-            var signaturesOfUser = dict[users.Text];
-
-            // to sort signatures 
-            signaturesOfUser = signaturesOfUser.Except(new[] { "R_10" }).ToList();
-            signaturesOfUser.Add("R_10"); 
+            //var dict = signatureAndUserDatabase.Parse();
+            var signaturesOfUser = signatureAndUserDatabase.GetSignatureNames(users.Text);
 
             if (signs.Items.Count == 0)
             {
@@ -193,6 +205,8 @@ namespace SignatureApp
                 result = signatureAndUserDatabase.CreateSignature(users.Text, signs.Text);
             }
 
+           //result = new Preprocessor().Preprocess(result); // just to test!!!
+         
             return result;
         }
 
@@ -335,8 +349,8 @@ namespace SignatureApp
 
             var preprocessor = new Preprocessor();
 
-            //LSign = preprocessor.ScaleAndShift(LSign);
-           // RSign = preprocessor.ScaleAndShift(RSign);
+            LSign = preprocessor.ScaleAndShift(LSign);
+            RSign = preprocessor.ScaleAndShift(RSign);
 
             DTW dtwPreProcess = new DTW(LSign, RSign);
             var resultPreProcess = dtwPreProcess.DTWAlgorithm(dtwPreProcess.DistanceMatrix);
@@ -403,24 +417,12 @@ namespace SignatureApp
 
         private void bVerify_Click(object sender, EventArgs e)
         {
-            var verifierLeft = new Verifier(LSign, signatureAndUserDatabase.GetReferenceSignatures(cBoxUsers1.Text));
-            var verifierRight = new Verifier(RSign, signatureAndUserDatabase.GetReferenceSignatures(cBoxUsers2.Text));
+            var verifierLeft = new Verifier(LSign, signatureAndUserDatabase.GetSignatures(cBoxUsers1.Text, 'R', true));
+            var verifierRight = new Verifier(RSign, signatureAndUserDatabase.GetSignatures(cBoxUsers2.Text, 'R', true));
             tbVerificationLeft.Text = verifierLeft.IsGenuine() ? "The signature on the left is genuine" : "The signature on the left is forged";
             tbVerificationRight.Text = verifierRight.IsGenuine() ? "The signature on the right is genuine" : "The signature on the right is forged";
         }
 
-        //private void cBoxSignatures2_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
 
-        //    RSign = signature;
-        //}
-
-        //private void cBoxSignatures1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
-
-        //    LSign = signature;
-        //}
     }
 }
