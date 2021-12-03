@@ -397,6 +397,15 @@ namespace SignatureApp
             tbDistancePreProcess.Text = resultPreProcess.ToString(CultureInfo.InvariantCulture);
             tbCostXPreProcess.Text = DTWxPreProcess.ToString(CultureInfo.InvariantCulture);
             tbCostYPreProcess.Text = DTWyPreprocess.ToString(CultureInfo.InvariantCulture);
+
+
+            Task.Run(() =>
+            {
+                var output = ExcelHandler.SetUpData();
+                ExcelHandler.SetUpExcel(output);
+                Trace.WriteLine("Done with EXCEL!");
+            }
+            );
         }
 
         private void rbZNorm_CheckedChanged(object sender, EventArgs e)
