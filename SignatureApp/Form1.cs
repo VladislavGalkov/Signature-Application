@@ -30,18 +30,15 @@ namespace SignatureApp
             }
         }
 
-        private void OkayButtonLeft_Click(object sender, EventArgs e)
+        private void OkayButton_Click(object sender, EventArgs e)
         {
-            LeftCanvas.Invalidate();
-           // LSign = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
-            
+            canvas.Invalidate();
         }
 
-        private void OkayButtonRight_Click(object sender, EventArgs e)
-        {
-            RightCanvas.Invalidate();
-           // RSign = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
-        }
+        //private void OkayButtonRight_Click(object sender, EventArgs e)
+        //{
+        //    RightCanvas.Invalidate();
+        //}
 
         private void cBoxUsers1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -53,18 +50,6 @@ namespace SignatureApp
             ShowSignatures(cBoxUsers2, cBoxSignatures2);
         }
 
-        //private void cBoxSignatures1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
-
-        //    LSign = signature;
-        //}
-        //private void cBoxSignatures2_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    var signature = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
-
-        //    RSign = signature;
-        //}
 
         private void ShowSignatures(ComboBox users, ComboBox signs)
         {
@@ -83,6 +68,21 @@ namespace SignatureApp
             }
         }
 
+        private List<PointF> GetOriginalSignatureFromCombobox(ComboBox users, ComboBox signs)
+        {
+            var result = new List<PointF>();
+
+            if (!users.Text.Equals("") && !signs.Text.Equals("")) // when the program starts all comboboxes are empty
+            {
+                //Trace.WriteLine(cBoxUsers.Text);
+                //Trace.WriteLine(cBoxSignatures.Text);
+
+                result = signatureAndUserDatabase.CreateSignature(users.Text, signs.Text);
+            }
+
+            return result;
+        }
+
         private ComboBox GetSignatures(ComboBox signs, List<string> signatures)
         {
             foreach (var sign in signatures)
@@ -98,117 +98,75 @@ namespace SignatureApp
             
         }
 
-        private void LeftCanvas_Paint(object sender, PaintEventArgs e)
+        private void Canvas_Paint(object sender, PaintEventArgs e)
         {
-            Draw(sender, e, cBoxUsers1, cBoxSignatures1, LeftCanvas);
+            if (LSign.Count == 0)
+            {
+                Draw(sender, e, cBoxUsers1, cBoxSignatures1, canvas, Color.Yellow);
+                Draw(sender, e, cBoxUsers2, cBoxSignatures2, canvas, Color.Red);
+            }
         }
 
-        private void RightCanvas_Paint(object sender, PaintEventArgs e)
-        {
-            Draw(sender, e, cBoxUsers2, cBoxSignatures2, RightCanvas);
-        }
+        //private void RightCanvas_Paint(object sender, PaintEventArgs e)
+        //{
+        //    Draw(sender, e, cBoxUsers2, cBoxSignatures2, RightCanvas, Color.Red);
+        //}
 
-        private void Draw(object sender, PaintEventArgs e, ComboBox users, ComboBox signs, Panel canvas)
+        private void Draw(object sender, PaintEventArgs e, ComboBox users, ComboBox signs, Panel canvas, Color color)
         {
-            Pen pen = new Pen(Color.Black);
+            LSign = GetOriginalSignatureFromCombobox(cBoxUsers1, cBoxSignatures1);
+            RSign = GetOriginalSignatureFromCombobox(cBoxUsers2, cBoxSignatures2);
+
+            Pen pen = new Pen(color, 0.5f);
 
             var points = GetOriginalSignatureFromCombobox(users, signs);
 
             var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
 
+            //// scale and translate the coordinates
+            //e.Graphics.ScaleTransform(1.0F, -1.0F);
+            //e.Graphics.TranslateTransform(0.0F, -(float)canvas.Height);
+
+            e.Graphics.TranslateTransform(canvas.Width / 2, canvas.Height / 2);
+
             e.Graphics.Transform = flipYMatrix;
 
-            //Preprocessor preprocessor = new Preprocessor();
-            //preprocessor.ScaleAndShift(points);
+            PointF[] pointsToDraw = null;
 
-
-
-            //if (points.Count != 0)
-            //{
-            //    e.Graphics.DrawLines(pen, points.ToArray());
-            //}
-
-
-            for (int i = 1; i < points.Count; i++)
+            if (points != null && points.Count != 0)
             {
-                var prevPoint = new PointF(points[i - 1].X, points[i - 1].Y);
-                var currPoint = new PointF(points[i].X, points[i].Y);
+                for (int i = 1; i < points.Count; i++)
+                {
+                    var prevPoint = new PointF(points[i - 1].X, points[i - 1].Y);
+                    var currPoint = new PointF(points[i].X, points[i].Y);
 
 
-                Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
-                Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
+                    Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
+                    Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
 
-                //e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
-                e.Graphics.DrawLine(pen, (int) prevPoint.X/2, (int) prevPoint.Y/2, (int) currPoint.X/2, (int) currPoint.Y/2);
-               // e.Graphics.DrawLine(pen, (int)prevPoint.X, (int)prevPoint.Y, (int)currPoint.X, (int)currPoint.Y);
+
+                    //e.Graphics.DrawLine(pen, (int)prevPoint.X / 2, (int)prevPoint.Y / 2, (int)currPoint.X / 2, (int)currPoint.Y / 2);
+
+                    pointsToDraw = points.ToArray();
+
+                }
+
+                int height = canvas.Height;
+                int width = canvas.Width;
+                var newPointArray = Array.ConvertAll(pointsToDraw, p => new PointF((p.X / canvas.Height) * 180, (p.Y / canvas.Width) * 180));
+               
+                foreach (var point in pointsToDraw)
+                {
+                    Trace.WriteLine($"({point.X}, {point.Y})");
+                }
+
+                e.Graphics.DrawLines(pen, newPointArray);
             }
 
-            #region OldDrawing
-            //if (!users.Text.Equals("") && !signs.Text.Equals("")) // when the program starts all comboboxes are empty
-            //{
-            //    //Trace.WriteLine(cBoxUsers.Text);
-            //    //Trace.WriteLine(cBoxSignatures.Text);
-
-            //    string path = signatures.DatabaseFolderPath + "\\" + users.Text + '_' + signs.Text + ".trj";
-
-            //    string[] lines = System.IO.File.ReadAllLines(path);
-
-            //    for (int i = 1; i < lines.Length - 1; i++)
-            //    {
-            //        string line = lines[i];
-            //        string[] parsed = line.Split(' ');
-
-            //        if (!Int32.Parse(parsed[0]).Equals(-1)) // when a line starts with '-1', it means the end of a stroke
-            //        {
-            //            Point p = new Point(Int32.Parse(parsed[0]), Int32.Parse(parsed[1]));
-            //            points.Add(p);
-            //        }
-            //    }
-
-            //    //DTWTest.Add(points);
-
-
-            //    var flipYMatrix = new Matrix(1, 0, 0, -1, 0, canvas.Height); // reflection in the X-axis 
-
-            //    e.Graphics.Transform = flipYMatrix;
-            //    // e.Graphics.DrawLines(pen, points.ToArray());
-
-
-            //    for (int i = 1; i < points.Count; i++)
-            //    {
-            //        Point prevPoint = new Point(points[i - 1].X, points[i - 1].Y);
-            //        Point currPoint = new Point(points[i].X, points[i].Y);
-
-
-            //        Trace.WriteLine($"Previous point {i}:  ({prevPoint.X}, {prevPoint.Y}) ");
-            //        Trace.WriteLine($"Current point: {i}: ({currPoint.X}, {currPoint.Y}) ");
-
-            //        double scale = 1;
-            //        //e.Graphics.DrawLine(pen, (int)(prevPoint.X / scale), (int)(prevPoint.Y - 350 / scale), (int)(currPoint.X / scale), (int)(currPoint.Y - 350 / scale));
-            //        e.Graphics.DrawLine(pen, prevPoint.X - 125, prevPoint.Y - 300, currPoint.X - 125, currPoint.Y - 300);
-            //    }
-            //}
-
-
-            #endregion
+            pen.Dispose();           
         }
 
-        private List<PointF> GetOriginalSignatureFromCombobox(ComboBox users, ComboBox signs)
-        {
-            var result = new List<PointF>();
-
-            if (!users.Text.Equals("") && !signs.Text.Equals("")) // when the program starts all comboboxes are empty
-            {
-                //Trace.WriteLine(cBoxUsers.Text);
-                //Trace.WriteLine(cBoxSignatures.Text);
-
-                result = signatureAndUserDatabase.CreateSignature(users.Text, signs.Text);
-            }
-
-           //result = new Preprocessor().Preprocess(result); // just to test!!!
-         
-            return result;
-        }
+    
 
         #region TestImplementationOfDTW
 
@@ -328,10 +286,7 @@ namespace SignatureApp
         #endregion
 
 
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            LeftCanvas.Controls.Clear();
-        }
+    
 
 
 
@@ -410,7 +365,7 @@ namespace SignatureApp
 
         private void rbZNorm_CheckedChanged(object sender, EventArgs e)
         {
-            var Normalizator = new Normalization();
+            var Normalizator = new Normalizator();
             LSign = Normalizator.Normalize(LSign);
             RSign = Normalizator.Normalize(RSign);
 
@@ -431,7 +386,5 @@ namespace SignatureApp
             tbVerificationLeft.Text = verifierLeft.IsGenuine() ? "The signature on the left is genuine" : "The signature on the left is forged";
             tbVerificationRight.Text = verifierRight.IsGenuine() ? "The signature on the right is genuine" : "The signature on the right is forged";
         }
-
-
     }
 }

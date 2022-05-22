@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SignatureApp
 {
-    class Normalization
+    class Normalizator
     {
         public List<PointF> Normalize(List<PointF> signature)
         {

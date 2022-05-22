@@ -28,14 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LeftCanvas = new System.Windows.Forms.Panel();
+            this.canvas = new System.Windows.Forms.Panel();
             this.cBoxUsers1 = new System.Windows.Forms.ComboBox();
             this.cBoxSignatures1 = new System.Windows.Forms.ComboBox();
             this.OkayButtonLeft = new System.Windows.Forms.Button();
             this.cBoxUsers2 = new System.Windows.Forms.ComboBox();
             this.cBoxSignatures2 = new System.Windows.Forms.ComboBox();
-            this.OkayButtonRight = new System.Windows.Forms.Button();
-            this.RightCanvas = new System.Windows.Forms.Panel();
             this.tbDistance = new System.Windows.Forms.TextBox();
             this.bDTW = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,24 +50,32 @@
             this.tbVerificationLeft = new System.Windows.Forms.TextBox();
             this.bVerify = new System.Windows.Forms.Button();
             this.tbVerificationRight = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // LeftCanvas
+            // canvas
             // 
-            this.LeftCanvas.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.LeftCanvas.Location = new System.Drawing.Point(12, 300);
-            this.LeftCanvas.Name = "LeftCanvas";
-            this.LeftCanvas.Size = new System.Drawing.Size(621, 498);
-            this.LeftCanvas.TabIndex = 0;
-            this.LeftCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.LeftCanvas_Paint);
+            this.canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.canvas.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.canvas.Location = new System.Drawing.Point(12, 215);
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size(824, 314);
+            this.canvas.TabIndex = 6;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
             // 
             // cBoxUsers1
             // 
             this.cBoxUsers1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxUsers1.FormattingEnabled = true;
-            this.cBoxUsers1.Location = new System.Drawing.Point(53, 40);
+            this.cBoxUsers1.Location = new System.Drawing.Point(12, 31);
             this.cBoxUsers1.Name = "cBoxUsers1";
-            this.cBoxUsers1.Size = new System.Drawing.Size(149, 24);
+            this.cBoxUsers1.Size = new System.Drawing.Size(65, 24);
             this.cBoxUsers1.TabIndex = 1;
             this.cBoxUsers1.SelectedIndexChanged += new System.EventHandler(this.cBoxUsers1_SelectedIndexChanged);
             // 
@@ -77,30 +83,29 @@
             // 
             this.cBoxSignatures1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxSignatures1.FormattingEnabled = true;
-            this.cBoxSignatures1.Location = new System.Drawing.Point(290, 40);
+            this.cBoxSignatures1.Location = new System.Drawing.Point(78, 31);
             this.cBoxSignatures1.Name = "cBoxSignatures1";
-            this.cBoxSignatures1.Size = new System.Drawing.Size(149, 24);
+            this.cBoxSignatures1.Size = new System.Drawing.Size(65, 24);
             this.cBoxSignatures1.TabIndex = 2;
-            //this.cBoxSignatures1.SelectedIndexChanged += new System.EventHandler(this.cBoxSignatures1_SelectedIndexChanged);
             // 
             // OkayButtonLeft
             // 
-            this.OkayButtonLeft.Location = new System.Drawing.Point(187, 97);
+            this.OkayButtonLeft.Location = new System.Drawing.Point(127, 107);
             this.OkayButtonLeft.Name = "OkayButtonLeft";
-            this.OkayButtonLeft.Size = new System.Drawing.Size(112, 43);
+            this.OkayButtonLeft.Size = new System.Drawing.Size(93, 27);
             this.OkayButtonLeft.TabIndex = 3;
             this.OkayButtonLeft.Text = "OK";
             this.OkayButtonLeft.UseMnemonic = false;
             this.OkayButtonLeft.UseVisualStyleBackColor = true;
-            this.OkayButtonLeft.Click += new System.EventHandler(this.OkayButtonLeft_Click);
+            this.OkayButtonLeft.Click += new System.EventHandler(this.OkayButton_Click);
             // 
             // cBoxUsers2
             // 
             this.cBoxUsers2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxUsers2.FormattingEnabled = true;
-            this.cBoxUsers2.Location = new System.Drawing.Point(822, 40);
+            this.cBoxUsers2.Location = new System.Drawing.Point(204, 31);
             this.cBoxUsers2.Name = "cBoxUsers2";
-            this.cBoxUsers2.Size = new System.Drawing.Size(149, 24);
+            this.cBoxUsers2.Size = new System.Drawing.Size(60, 24);
             this.cBoxUsers2.TabIndex = 4;
             this.cBoxUsers2.SelectedIndexChanged += new System.EventHandler(this.cBoxUsers2_SelectedIndexChanged);
             // 
@@ -108,35 +113,14 @@
             // 
             this.cBoxSignatures2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBoxSignatures2.FormattingEnabled = true;
-            this.cBoxSignatures2.Location = new System.Drawing.Point(1077, 40);
+            this.cBoxSignatures2.Location = new System.Drawing.Point(270, 31);
             this.cBoxSignatures2.Name = "cBoxSignatures2";
-            this.cBoxSignatures2.Size = new System.Drawing.Size(149, 24);
+            this.cBoxSignatures2.Size = new System.Drawing.Size(60, 24);
             this.cBoxSignatures2.TabIndex = 5;
-            //this.cBoxSignatures2.SelectedIndexChanged += new System.EventHandler(this.cBoxSignatures2_SelectedIndexChanged);
-            // 
-            // OkayButtonRight
-            // 
-            this.OkayButtonRight.Location = new System.Drawing.Point(965, 97);
-            this.OkayButtonRight.Name = "OkayButtonRight";
-            this.OkayButtonRight.Size = new System.Drawing.Size(112, 43);
-            this.OkayButtonRight.TabIndex = 6;
-            this.OkayButtonRight.Text = "OK";
-            this.OkayButtonRight.UseMnemonic = false;
-            this.OkayButtonRight.UseVisualStyleBackColor = true;
-            this.OkayButtonRight.Click += new System.EventHandler(this.OkayButtonRight_Click);
-            // 
-            // RightCanvas
-            // 
-            this.RightCanvas.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.RightCanvas.Location = new System.Drawing.Point(686, 300);
-            this.RightCanvas.Name = "RightCanvas";
-            this.RightCanvas.Size = new System.Drawing.Size(621, 498);
-            this.RightCanvas.TabIndex = 7;
-            this.RightCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.RightCanvas_Paint);
             // 
             // tbDistance
             // 
-            this.tbDistance.Location = new System.Drawing.Point(579, 83);
+            this.tbDistance.Location = new System.Drawing.Point(418, 86);
             this.tbDistance.Name = "tbDistance";
             this.tbDistance.ReadOnly = true;
             this.tbDistance.Size = new System.Drawing.Size(77, 22);
@@ -144,9 +128,9 @@
             // 
             // bDTW
             // 
-            this.bDTW.Location = new System.Drawing.Point(601, 12);
+            this.bDTW.Location = new System.Drawing.Point(452, 9);
             this.bDTW.Name = "bDTW";
-            this.bDTW.Size = new System.Drawing.Size(168, 43);
+            this.bDTW.Size = new System.Drawing.Size(117, 43);
             this.bDTW.TabIndex = 10;
             this.bDTW.Text = "DTW distances";
             this.bDTW.UseMnemonic = false;
@@ -156,7 +140,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(527, 112);
+            this.label1.Location = new System.Drawing.Point(353, 117);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 17);
             this.label1.TabIndex = 11;
@@ -164,7 +148,7 @@
             // 
             // tbCostX
             // 
-            this.tbCostX.Location = new System.Drawing.Point(579, 112);
+            this.tbCostX.Location = new System.Drawing.Point(418, 114);
             this.tbCostX.Name = "tbCostX";
             this.tbCostX.ReadOnly = true;
             this.tbCostX.Size = new System.Drawing.Size(77, 22);
@@ -172,7 +156,7 @@
             // 
             // tbCostY
             // 
-            this.tbCostY.Location = new System.Drawing.Point(579, 140);
+            this.tbCostY.Location = new System.Drawing.Point(418, 142);
             this.tbCostY.Name = "tbCostY";
             this.tbCostY.ReadOnly = true;
             this.tbCostY.Size = new System.Drawing.Size(77, 22);
@@ -181,7 +165,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(527, 140);
+            this.label2.Location = new System.Drawing.Point(352, 142);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 17);
             this.label2.TabIndex = 14;
@@ -190,7 +174,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(512, 83);
+            this.label3.Location = new System.Drawing.Point(351, 89);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 17);
             this.label3.TabIndex = 15;
@@ -198,7 +182,7 @@
             // 
             // tbDistancePreProcess
             // 
-            this.tbDistancePreProcess.Location = new System.Drawing.Point(692, 83);
+            this.tbDistancePreProcess.Location = new System.Drawing.Point(526, 86);
             this.tbDistancePreProcess.Name = "tbDistancePreProcess";
             this.tbDistancePreProcess.ReadOnly = true;
             this.tbDistancePreProcess.Size = new System.Drawing.Size(77, 22);
@@ -206,7 +190,7 @@
             // 
             // tbCostXPreProcess
             // 
-            this.tbCostXPreProcess.Location = new System.Drawing.Point(692, 112);
+            this.tbCostXPreProcess.Location = new System.Drawing.Point(526, 114);
             this.tbCostXPreProcess.Name = "tbCostXPreProcess";
             this.tbCostXPreProcess.ReadOnly = true;
             this.tbCostXPreProcess.Size = new System.Drawing.Size(77, 22);
@@ -215,7 +199,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(589, 63);
+            this.label4.Location = new System.Drawing.Point(415, 66);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 17);
             this.label4.TabIndex = 18;
@@ -224,7 +208,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(683, 63);
+            this.label5.Location = new System.Drawing.Point(523, 66);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 17);
             this.label5.TabIndex = 19;
@@ -232,7 +216,7 @@
             // 
             // tbCostYPreProcess
             // 
-            this.tbCostYPreProcess.Location = new System.Drawing.Point(692, 140);
+            this.tbCostYPreProcess.Location = new System.Drawing.Point(526, 142);
             this.tbCostYPreProcess.Name = "tbCostYPreProcess";
             this.tbCostYPreProcess.ReadOnly = true;
             this.tbCostYPreProcess.Size = new System.Drawing.Size(77, 22);
@@ -241,7 +225,7 @@
             // rbZNorm
             // 
             this.rbZNorm.AutoSize = true;
-            this.rbZNorm.Location = new System.Drawing.Point(425, 113);
+            this.rbZNorm.Location = new System.Drawing.Point(467, 170);
             this.rbZNorm.Name = "rbZNorm";
             this.rbZNorm.Size = new System.Drawing.Size(78, 21);
             this.rbZNorm.TabIndex = 21;
@@ -252,17 +236,17 @@
             // 
             // tbVerificationLeft
             // 
-            this.tbVerificationLeft.Location = new System.Drawing.Point(479, 233);
+            this.tbVerificationLeft.Location = new System.Drawing.Point(666, 142);
             this.tbVerificationLeft.Name = "tbVerificationLeft";
             this.tbVerificationLeft.ReadOnly = true;
-            this.tbVerificationLeft.Size = new System.Drawing.Size(391, 22);
+            this.tbVerificationLeft.Size = new System.Drawing.Size(148, 22);
             this.tbVerificationLeft.TabIndex = 22;
             // 
             // bVerify
             // 
-            this.bVerify.Location = new System.Drawing.Point(592, 184);
+            this.bVerify.Location = new System.Drawing.Point(682, 12);
             this.bVerify.Name = "bVerify";
-            this.bVerify.Size = new System.Drawing.Size(168, 43);
+            this.bVerify.Size = new System.Drawing.Size(117, 43);
             this.bVerify.TabIndex = 23;
             this.bVerify.Text = "Verify";
             this.bVerify.UseMnemonic = false;
@@ -271,17 +255,57 @@
             // 
             // tbVerificationRight
             // 
-            this.tbVerificationRight.Location = new System.Drawing.Point(479, 261);
+            this.tbVerificationRight.Location = new System.Drawing.Point(666, 84);
             this.tbVerificationRight.Name = "tbVerificationRight";
             this.tbVerificationRight.ReadOnly = true;
-            this.tbVerificationRight.Size = new System.Drawing.Size(391, 22);
+            this.tbVerificationRight.Size = new System.Drawing.Size(148, 22);
             this.tbVerificationRight.TabIndex = 24;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 17);
+            this.label6.TabIndex = 25;
+            this.label6.Text = "User1";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(215, 9);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 17);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "User2";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(75, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 17);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "Signature";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(267, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(69, 17);
+            this.label9.TabIndex = 28;
+            this.label9.Text = "Signature";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1319, 810);
+            this.ClientSize = new System.Drawing.Size(848, 541);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.tbVerificationRight);
             this.Controls.Add(this.bVerify);
             this.Controls.Add(this.tbVerificationLeft);
@@ -298,14 +322,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bDTW);
             this.Controls.Add(this.tbDistance);
-            this.Controls.Add(this.RightCanvas);
-            this.Controls.Add(this.OkayButtonRight);
             this.Controls.Add(this.cBoxSignatures2);
             this.Controls.Add(this.cBoxUsers2);
             this.Controls.Add(this.OkayButtonLeft);
             this.Controls.Add(this.cBoxSignatures1);
             this.Controls.Add(this.cBoxUsers1);
-            this.Controls.Add(this.LeftCanvas);
+            this.Controls.Add(this.canvas);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "Signature Verification";
@@ -316,14 +338,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel LeftCanvas;
+        private System.Windows.Forms.Panel canvas;
         private System.Windows.Forms.ComboBox cBoxUsers1;
         private System.Windows.Forms.ComboBox cBoxSignatures1;
         private System.Windows.Forms.Button OkayButtonLeft;
         private System.Windows.Forms.ComboBox cBoxUsers2;
         private System.Windows.Forms.ComboBox cBoxSignatures2;
-        private System.Windows.Forms.Button OkayButtonRight;
-        private System.Windows.Forms.Panel RightCanvas;
         private System.Windows.Forms.TextBox tbDistance;
         private System.Windows.Forms.Button bDTW;
         private System.Windows.Forms.Label label1;
@@ -340,6 +360,10 @@
         private System.Windows.Forms.TextBox tbVerificationLeft;
         private System.Windows.Forms.Button bVerify;
         private System.Windows.Forms.TextBox tbVerificationRight;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }
 

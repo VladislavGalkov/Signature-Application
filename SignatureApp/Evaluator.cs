@@ -16,22 +16,6 @@ namespace SignatureApp
 
         public static int FalseAcceptanceCount { get; set; }
         public static int FalseRejectionCount { get; set; }
-        
-        //public static Evaluator(string user)
-        //{
-        //    User = user;
-        //}
-
-        //public Evaluator(Signature signatureAndUserDatabase)
-        //{
-        //    this.signatureAndUserDatabase = signatureAndUserDatabase;
-        //}
-
-        //public Evaluator(Signature signatureAndUserDatabase, string user)
-        //{
-        //    this.signatureAndUserDatabase = signatureAndUserDatabase;
-        //    User = user;
-        //}
 
         public static void EvaluateRateError(string user)
         {
@@ -75,19 +59,19 @@ namespace SignatureApp
             }
         }
 
-        public static double GetFalseRejectionErrorRate()
+        public static double GetFalseRejectionErrorRate(string user)
         {
-            return (double)FalseRejectionCount / 10;
+            return (double)FalseRejectionCount / signatureAndUserDatabase.GetSignatures(user, 'F', true).Count();
         }
 
-        public static double GetFalseAcceptanceErrorRate()
+        public static double GetFalseAcceptanceErrorRate(string user)
         {
-            return (double)FalseAcceptanceCount / 10;
+            return (double)FalseAcceptanceCount / signatureAndUserDatabase.GetSignatures(user, 'G', true).Count(); ;
         }
 
-        public static double GetAverageErrorRate()
+        public static double GetAverageErrorRate(string user)
         {
-            return (double)(GetFalseAcceptanceErrorRate() + GetFalseRejectionErrorRate()) / 2;
+            return (double)(GetFalseAcceptanceErrorRate(user) + GetFalseRejectionErrorRate(user)) / 2;
         }
 
 
@@ -102,9 +86,9 @@ namespace SignatureApp
                 var rates = new List<ErrorRates>();
                 EvaluateRateError(user);
 
-                var FRR = GetFalseRejectionErrorRate();
-                var FAR = GetFalseAcceptanceErrorRate();
-                var AVGR = GetAverageErrorRate();
+                var FRR = GetFalseRejectionErrorRate(user);
+                var FAR = GetFalseAcceptanceErrorRate(user);
+                var AVGR = GetAverageErrorRate(user);
 
                 Trace.WriteLine($"FRR = {FRR}, FAR = {FAR}");
                 Trace.WriteLine(AVGR);

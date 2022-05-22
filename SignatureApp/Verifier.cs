@@ -55,8 +55,6 @@ namespace SignatureApp
             return sum / count;
         }
 
-        
-
         private List<double> GetDTWBetweenSelectedAndReference(List<PointF> selectedSignature)
         {
             var result = new List<double>();
@@ -95,7 +93,7 @@ namespace SignatureApp
         private List<PointF>[] PreprocessReferenceSignatures()
         {
             var preprocessor = new Preprocessor();
-            var normalizer = new Normalization();
+            var normalizer = new Normalizator();
 
             var result = new List<PointF>[10];
             for (int i = 0; i < References.Length; i++)

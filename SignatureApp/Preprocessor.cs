@@ -51,7 +51,7 @@ namespace SignatureApp
 
         public List<PointF> Preprocess(List<PointF> signature)
         {
-            var normalizer = new Normalization();
+            var normalizer = new Normalizator();
             signature = ScaleAndShift(signature);
             signature = normalizer.Normalize(signature);
 
