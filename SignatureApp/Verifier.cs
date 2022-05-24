@@ -14,6 +14,9 @@ namespace SignatureApp
 
         List<PointF>[] References { get; }
 
+        public double average { get; set; }
+        public double refAverage { get; set; }
+
 
         public Verifier(List<PointF> selectedSignature, List<PointF>[] referenceSignatures)
         {
@@ -51,8 +54,10 @@ namespace SignatureApp
                 }
                 
             }
-               
-            return sum / count;
+
+            var result = sum / count;
+            refAverage = result;
+            return result;
         }
 
         private List<double> GetDTWBetweenSelectedAndReference(List<PointF> selectedSignature)
@@ -78,15 +83,18 @@ namespace SignatureApp
             {
                 sum += value;
             }
-                
-            return sum / dtwBetweenSelectedAndReference.Count;
+
+            var result = sum / dtwBetweenSelectedAndReference.Count;
+            average = result;
+
+            return result;
         }
 
         public bool IsGenuine()
         {
             var referenceAverage = GetReferenceAverage();
             var average = GetAverage();
-            
+
             return average <= referenceAverage;
         }
 

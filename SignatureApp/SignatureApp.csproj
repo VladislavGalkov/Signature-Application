@@ -64,11 +64,11 @@
     <Compile Include="DTW.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="ExcelHandler.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="UI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="UI.Designer.cs">
+      <DependentUpon>UI.cs</DependentUpon>
     </Compile>
     <Compile Include="Normalizator.cs" />
     <Compile Include="Program.cs" />
@@ -77,8 +77,8 @@
     <Compile Include="ErrorRates.cs" />
     <Compile Include="Signature.cs" />
     <Compile Include="Verifier.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="UI.resx">
+      <DependentUpon>UI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -90,6 +90,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram.cd" />
     <None Include="Database\A01_F1_1.trj" />
     <None Include="Database\A01_F1_2.trj" />
     <None Include="Database\A01_F1_3.trj" />

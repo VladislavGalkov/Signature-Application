@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SignatureApp.DTW">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgAwAAAAAAAAIAAAAAAAgABABIIABAAgAAQAABAAA=</HashCode>
+      <FileName>DTW.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.ErrorRates">
+    <Position X="7" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorRates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.Evaluator">
+    <Position X="9.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAIQAAAAAAAAAAAAEAAAAIAAAAIAgAAAAQAAAQ=</HashCode>
+      <FileName>Evaluator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.ExcelHandler">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAQAAAAAAAAABAAAAAgAgAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>ExcelHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.Preprocessor">
+    <Position X="8" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIBAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Preprocessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.Signature">
+    <Position X="2.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgCAAAAAgAABAAIAAAAAACAAgAAAAQAAAAAAAIAAA=</HashCode>
+      <FileName>Signature.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.Verifier">
+    <Position X="4.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAAAAAEAAAQAAAAEABAAAAAIAQgAAAgAAAAAAgAAA=</HashCode>
+      <FileName>Verifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.UI" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AECMAGAGACAACnAQoATQCAACAILEAAQARAAAAAQRAgE=</HashCode>
+      <FileName>UI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.Normalizator">
+    <Position X="6.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAEAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Normalizator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SignatureApp.Program">
+    <Position X="10.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="SignatureApp.Operations">
+    <Position X="2.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DTW.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

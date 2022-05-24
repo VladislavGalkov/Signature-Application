@@ -137,9 +137,6 @@ namespace SignatureApp
                     {
                         BackTraceMatrix[i, j] = Operations.DELETION;
                     }
-
-                   //Trace.WriteLine($"Point: [{i}, {j}]");
-                   //Trace.WriteLine($"Operation: {BackTraceMatrix[i,j]}");
                 }
            return Math.Round(CostMatrix[LSign.Count, RSign.Count], 2); //return top right corner element
         }

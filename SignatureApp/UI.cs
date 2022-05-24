@@ -13,13 +13,13 @@ using System.Windows.Forms;
 
 namespace SignatureApp
 {
-    public partial class Form1 : Form
+    public partial class UI : Form
     {
         readonly Signature signatureAndUserDatabase = new Signature();
         public List<PointF> LSign { get; set; }
         public List<PointF> RSign { get; set; }
 
-        public Form1()
+        public UI()
         {
             InitializeComponent();
             var keys = signatureAndUserDatabase.Parse().Keys.ToList(); //all users
@@ -35,10 +35,6 @@ namespace SignatureApp
             canvas.Invalidate();
         }
 
-        //private void OkayButtonRight_Click(object sender, EventArgs e)
-        //{
-        //    RightCanvas.Invalidate();
-        //}
 
         private void cBoxUsers1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -74,9 +70,6 @@ namespace SignatureApp
 
             if (!users.Text.Equals("") && !signs.Text.Equals("")) // when the program starts all comboboxes are empty
             {
-                //Trace.WriteLine(cBoxUsers.Text);
-                //Trace.WriteLine(cBoxSignatures.Text);
-
                 result = signatureAndUserDatabase.CreateSignature(users.Text, signs.Text);
             }
 
@@ -100,17 +93,10 @@ namespace SignatureApp
 
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
-            if (LSign.Count == 0)
-            {
-                Draw(sender, e, cBoxUsers1, cBoxSignatures1, canvas, Color.Yellow);
-                Draw(sender, e, cBoxUsers2, cBoxSignatures2, canvas, Color.Red);
-            }
-        }
+            Draw(sender, e, cBoxUsers1, cBoxSignatures1, canvas, Color.Yellow);
+            Draw(sender, e, cBoxUsers2, cBoxSignatures2, canvas, Color.Red);
 
-        //private void RightCanvas_Paint(object sender, PaintEventArgs e)
-        //{
-        //    Draw(sender, e, cBoxUsers2, cBoxSignatures2, RightCanvas, Color.Red);
-        //}
+        }
 
         private void Draw(object sender, PaintEventArgs e, ComboBox users, ComboBox signs, Panel canvas, Color color)
         {
@@ -165,129 +151,6 @@ namespace SignatureApp
 
             pen.Dispose();           
         }
-
-    
-
-        #region TestImplementationOfDTW
-
-
-
-
-        //public double DTW(List<Point> x, List<Point> y)
-        //{
-        //    // get all distances
-        //    var DistMatrix = new double[x.Count,y.Count];
-
-        //    for (int i = 0; i < x.Count - 1; i++)
-        //    {
-        //        for (int j = 0; j < y.Count - 1; j++)
-        //        {
-        //            DistMatrix[i, j] = GetDistance(x[i], y[j]);
-        //        }
-        //    }
-
-        //    var CostMatrix = new double[x.Count + 1, y.Count + 1];
-
-        //    //CostMatrix Initialization 
-        //    CostMatrix[0, 0] = 0;
-        //    for (int i = 1; i < x.Count + 1; i++)
-        //        CostMatrix[i, 0] = Double.PositiveInfinity;
-        //    for (int j = 1; j < y.Count + 1; j++)
-        //        CostMatrix[0, j] = Double.PositiveInfinity;
-
-        //    //fill the CostMatrix 
-
-        //    var backtraceMatrix = new double[x.Count, y.Count];
-        //    //for (int i = 0; i < x.Count - 1; i++)
-        //    //{
-        //    //    for (int j = 0; j < y.Count - 1; j++)
-        //    //    {
-        //    //        backtraceMatrix[i, j] = 0;
-        //    //    }
-        //    //}
-
-        //    for (int i = 0; i < x.Count; i++)
-        //    {
-        //        for (int j = 0; j < y.Count; j++)
-        //        {
-        //            double match = CostMatrix[i, j];
-        //            double insertion = CostMatrix[i, j + 1];
-        //            double deletion = CostMatrix[i + 1, j];
-
-        //            List<double> values = new List<double>();
-        //            values.Add(match);
-        //            values.Add(insertion);
-        //            values.Add(deletion);
-
-        //            double min = Math.Min(match, Math.Min(insertion, deletion));
-        //           //var min = values.Min();
-        //           CostMatrix[i + 1, j + 1] = DistMatrix[i, j] + min; //CostMatrix[0,0] = 0; 
-        //           backtraceMatrix[i, j] = values.IndexOf(min);
-        //        }
-        //    }
-
-        //    //traceback from bottom right
-        //    int k = x.Count - 1;
-        //    int l = y.Count - 1;
-
-        //    var result = CostMatrix[k, l];
-        //    while (k > 0 || l > 0)
-        //    {
-        //        var oper = backtraceMatrix[k, l];
-        //        switch (oper)
-        //        {
-        //            case 0:
-        //            {
-        //                k--; l--;
-        //            }break;
-
-        //            case 1:
-        //            {
-        //                k--; 
-        //            } break;
-
-        //            case 2:
-        //            {
-        //               l--;
-        //            } break;
-        //        }
-
-        //        result += CostMatrix[k, l];
-        //    }
-
-        //    tbDistance.Text = result.ToString(CultureInfo.InvariantCulture);
-        //    return result;
-        //}
-
-        //private double GetDistance(Point point, Point point1)
-        //{
-        //    Trace.WriteLine(Math.Sqrt(Math.Pow(point.X - point1.X, 2) + Math.Pow(point.Y - point1.Y, 2)));
-        //    return Math.Sqrt(Math.Pow(point.X - point1.X, 2) + Math.Pow(point.Y - point1.Y, 2));
-        //}
-
-        //private List<Point> CheckPosition(List<Point> points, Panel canvas)
-        //{
-        //    int count = 0;
-        //    foreach (var point in points)
-        //    {
-        //        if (point.Y > canvas.Height)
-        //        {
-        //            count++;
-        //            break;
-        //        }
-        //    }
-
-        //    foreach (var point in points)
-        //    {
-        //        point.Y = -150;
-        //    }
-        //}
-
-        #endregion
-
-
-    
-
 
 
         private void bDTW_Click(object sender, EventArgs e)
@@ -383,8 +246,12 @@ namespace SignatureApp
         {
             var verifierLeft = new Verifier(LSign, signatureAndUserDatabase.GetSignatures(cBoxUsers1.Text, 'R', true));
             var verifierRight = new Verifier(RSign, signatureAndUserDatabase.GetSignatures(cBoxUsers2.Text, 'R', true));
-            tbVerificationLeft.Text = verifierLeft.IsGenuine() ? "The signature on the left is genuine" : "The signature on the left is forged";
-            tbVerificationRight.Text = verifierRight.IsGenuine() ? "The signature on the right is genuine" : "The signature on the right is forged";
+            tbVerificationLeft.Text = verifierLeft.IsGenuine() ? "Genuine!" : "Forged!"; //first signature
+            tbVerificationRight.Text = verifierRight.IsGenuine() ? "Genuine!" : "Forged!"; //second signature
+            tbSelectedAvrgLeft.Text = verifierLeft.average.ToString();
+            tbRefAvrgLeft.Text = verifierLeft.refAverage.ToString();
+            tbSelectedAvrgRight.Text = verifierRight.average.ToString();
+            tbRefAvrgRight.Text = verifierRight.refAverage.ToString();
         }
     }
 }

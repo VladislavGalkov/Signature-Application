@@ -17,6 +17,7 @@ namespace SignatureApp
                 var minX = signature.Min<PointF>(x => x.X);
                 var maxX = signature.Max<PointF>(x => x.X);
 
+                // scaling by replacing the X values
                 foreach (var point in signature)
                 {
                     scaledSignature.Add(new PointF((point.X - minX) / (maxX - minX), point.Y));

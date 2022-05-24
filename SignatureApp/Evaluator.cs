@@ -11,7 +11,6 @@ namespace SignatureApp
     static class Evaluator
     {
         readonly static Signature signatureAndUserDatabase = new Signature();
-        //public static string User { get; }
         public static List<PointF>[] Signatures { get; set; }
 
         public static int FalseAcceptanceCount { get; set; }
